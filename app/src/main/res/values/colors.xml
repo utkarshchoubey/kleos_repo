@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#15161d</color>
+    <color name="colorPrimaryDark">#00e5ff</color>
+    <color name="colorAccent">#00BB84</color>
+    <color name="transparent">#00000000</color>
+    <color name="main_graident_start">#00bb84</color>
+    <color name="main_graident_middle">#3d87ff</color>
+    <color name="main_graident_end">#d45ff2</color>
 </resources>
