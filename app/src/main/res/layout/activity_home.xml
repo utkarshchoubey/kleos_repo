@@ -20,19 +20,22 @@
             android:background="#15161d"
             app:popupTheme="@style/Theme.AppCompat">
 
-
-            <TextView
-                android:id="@+id/qiestion"
+            <com.mursaat.extendedtextview.AnimatedGradientTextView
+                android:id="@+id/question_textview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
                 android:lineSpacingExtra="8sp"
                 android:text="Questions"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textColor="@color/colorPrimaryDark"
                 android:textSize="36sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:angle="45"
+                app:colors="@array/main_gradient"
+                app:maxFPS="30"
+                app:simultaneousColors="4"
+                app:speed="1000" />
+
 
         </android.support.v7.widget.Toolbar>
 
@@ -45,4 +48,5 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/colorPrimary" />
+
 </LinearLayout>

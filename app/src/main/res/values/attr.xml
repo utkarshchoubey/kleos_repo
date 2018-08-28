@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="main_gradient">
+        <item>@color/colorPrimaryDark</item>
+        <item>@color/main_graident_start</item>
+        <item>@color/main_graident_middle</item>
+        <item>@color/main_graident_end</item>
+    </array>
+
+</resources>

@@ -1,4 +1,18 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Kleos2k18</string>
     <string name="question">Questions</string>>
+    <!-- value for the phone mode menu -->
+    <string name="bbn_phone_view_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.BottomBehavior</string>
+
+    <!-- behavior for the tablet mode menu -->
+    <string name="bbn_tablet_view_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.TabletBehavior</string>
+
+    <!-- this is the default value -->
+    <string name="bbn_default_view_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.BottomBehavior</string>
+
+    <!-- default badge provider -->
+    <string name="bbn_badgeProvider" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.BadgeProvider</string>
+
+    <!-- default floating action button behavior -->
+    <string name="bbn_fab_default_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.FloatingActionButtonBehavior</string>
 </resources>

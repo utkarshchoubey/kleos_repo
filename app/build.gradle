@@ -29,4 +29,7 @@ dependencies {
     implementation 'com.yarolegovich:sliding-root-nav:1.1.0'
     implementation 'com.wang.avi:library:2.1.3'
     implementation 'com.jaeger.statusbarutil:library:1.4.0'
+    implementation 'am.appwise.components:NoInternetDialog:1.1.3'
+    implementation 'com.github.Mursaat:AnimatedGradientTextView:v0.0.6'
+
 }
