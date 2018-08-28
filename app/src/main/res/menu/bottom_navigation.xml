@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    app:background="@color/transparent"
+    app:bbn_rippleColor="@color/colorPrimary"
+    app:bbn_itemColorInactive="@color/colorWhite"
+    app:bbn_itemColorDisabled="@color/transparent"
+    app:bbn_itemColorActive="@color/colorPrimaryDark"
+    >
+    <item
+        android:id="@+id/questionTab"
+        android:color="@color/colorPrimary"
+        android:icon="@drawable/info"
+        android:title="Questions" />
+    <item
+        android:id="@+id/leaderboardtab"
+        android:color="@color/colorPrimary"
+        android:icon="@drawable/trophy"
+        android:title="Leaderboard" />
+    <item
+        android:id="@+id/hintTab"
+        android:color="@color/colorPrimary"
+        android:icon="@drawable/hints"
+        android:title="Hints" />
+    <item
+        android:id="@+id/profileTab"
+        android:color="@color/colorPrimary"
+        android:icon="@drawable/profile"
+        android:title="Profile" />
+</menu>

@@ -2,9 +2,10 @@
 <resources>
     <color name="colorPrimary">#15161d</color>
     <color name="colorPrimaryDark">#00e5ff</color>
-    <color name="colorAccent">#00BB84</color>
+    <color name="colorAccent">#00bb84</color>
     <color name="transparent">#00000000</color>
     <color name="main_graident_end">#00ffb4</color>
     <color name="main_graident_middle">#0061ff</color>
     <color name="main_graident_start">#cb00ff</color>
+    <color name="white">#ffffff</color>
 </resources>

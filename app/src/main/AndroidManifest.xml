@@ -23,7 +23,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.Navigation_Drawer"
+        <activity android:name=".activities.NavigationDrawer"
             android:screenOrientation="nosensor">
 
         </activity>

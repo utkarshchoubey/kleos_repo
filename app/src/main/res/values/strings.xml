@@ -15,4 +15,9 @@
 
     <!-- default floating action button behavior -->
     <string name="bbn_fab_default_behavior" translatable="false" tools:ignore="UnusedResources">it.sephiroth.android.library.bottomnavigation.FloatingActionButtonBehavior</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="loreIsum"> Lorem ipsum dolor amet gochujang raw denim banjo subway tile butcher vape. Neutra raclette everyday carry pabst, viral iceland roof party stumptown before they sold out squid irony glossier. Drinking vinegar kogi chambray irony, iceland kickstarter hashtag aesthetic crucifix franzen. Hexagon kickstarter freegan roof party chia intelligentsia.</string>
 </resources>
