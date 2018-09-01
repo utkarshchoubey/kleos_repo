@@ -41,4 +41,8 @@ dependencies {
     implementation 'com.github.rasoulmiri:Skeleton:v1.0.9'
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    implementation 'com.github.florent37:depth:1.0.0'
+    implementation 'com.github.hajiyevelnur92:intentanimation:1.0'
+    implementation 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
+    implementation 'rongi.rotate-layout:rotate-layout:3.0.0'
 }

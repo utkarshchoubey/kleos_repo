@@ -1,8 +1,11 @@
 package com.technocracy.nitraipur.kleos2k18.adapters;
 
+
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
-import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPagerAdapter;
 import com.technocracy.nitraipur.kleos2k18.R;
+import com.technocracy.nitraipur.kleos2k18.activities.QuestionActivity;
 import com.technocracy.nitraipur.kleos2k18.utils.Question;
 
 import java.util.ArrayList;
@@ -22,23 +24,13 @@ import io.github.mthli.slice.Slice;
 public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecyclerAdapter.QuestionViewHolder>{
     ArrayList<Question> questions = new ArrayList<Question>();
     Context ct;
-    private static final int VIEW_TYPE_TOP = 0x01;
-    private static final int VIEW_TYPE_CENTER = 0x02;
-    private static final int VIEW_TYPE_BOTTOM = 0x03;
+    FragmentManager fm;
 
     public QuestionRecyclerAdapter(Context ct){
         this.ct = ct;
+        this.fm = fm;
     }
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 0) {
-            return VIEW_TYPE_TOP;
-        } else if (position == getItemCount() - 1) {
-            return VIEW_TYPE_BOTTOM;
-        } else {
-            return VIEW_TYPE_CENTER;
-        }
-    }
+
     @NonNull
     @Override
     public QuestionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -49,14 +41,20 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
 
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
-        int viewType = getItemViewType(position);
         Slice slice = new Slice(holder.getLayout());
-        slice.setElevation(2.0f);
-            slice.setRadius(8.0f);
-
+        slice.setColor(R.color.button);
+        slice.setRipple(1);
+        slice.setRadius(8.0f);
 
         holder.questionTextView.setText("Some Tittle");
        holder.questionContent.setText(R.string.loreIsum);
+       holder.questionCard.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               Intent i = new Intent(ct, QuestionActivity.class);
+               ct.startActivity(i);
+           }
+       });
     }
 
     @Override
@@ -64,7 +62,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
         return 10;
     }
 
-    public class QuestionViewHolder extends RecyclerView.ViewHolder {
+    public class QuestionViewHolder extends RecyclerView.ViewHolder{
         TextView questionTextView, questionContent;
         ConstraintLayout questionCard;
         ImageView questionImage;
@@ -75,9 +73,13 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
             questionContent = (TextView)itemView.findViewById(R.id.questionContent);
             questionImage = (ImageView)itemView.findViewById(R.id.questionImage);
         }
+
         public ConstraintLayout getLayout(){
             return questionCard;
         }
+
+
+
     }
 
 }

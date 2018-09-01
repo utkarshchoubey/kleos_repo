@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.technocracy.nitraipur.kleos2k18">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -10,12 +11,28 @@
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
-        android:supportsRtl="true"
         android:roundIcon="@drawable/icon"
+        android:supportsRtl="true"
         android:theme="@style/NoActionBar"
-        tools:replace="android:theme"
-        >
-        <activity android:name=".activities.HomeActivity"
+        tools:replace="android:theme">
+        <activity
+            android:name=".activities.HomeActivity"
+            android:screenOrientation="nosensor">
+
+        </activity>
+        <activity
+            android:name=".activities.NavigationDrawer"
+            android:screenOrientation="nosensor">
+
+        </activity>
+        <activity
+            android:name=".activities.QuestionActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="nosensor">
+
+        </activity>
+        <activity
+            android:name=".activities.SplashScreen"
             android:screenOrientation="nosensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +40,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.NavigationDrawer"
+        <activity android:name=".activities.LoginActivity"
             android:screenOrientation="nosensor">
 
         </activity>
