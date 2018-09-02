@@ -11,16 +11,28 @@ public class UserPreferences {
         this.activity = activity;
     }
 
-    public boolean checkLoggedIn() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
-        return preferences.getBoolean("LoggedIn", false);
-    }
-    public void setLoggedIn(boolean loggedIn) {
+
+    public void setUsername(String username) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
         SharedPreferences.Editor editor = preferences.edit();
 
-        editor.putBoolean("LoggedIn", loggedIn);
+        editor.putString("username", username);
         editor.apply();
     }
+    public String getUsername() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString("username", "");
+    }
 
+    public void setPassword(String password) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("password", password);
+        editor.apply();
+    }
+    public String getPassword() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        return preferences.getString("password", "");
+    }
 }

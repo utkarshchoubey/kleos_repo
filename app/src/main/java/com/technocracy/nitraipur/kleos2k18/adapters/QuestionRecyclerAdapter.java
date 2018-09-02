@@ -15,14 +15,13 @@ import android.widget.TextView;
 
 import com.technocracy.nitraipur.kleos2k18.R;
 import com.technocracy.nitraipur.kleos2k18.activities.QuestionActivity;
-import com.technocracy.nitraipur.kleos2k18.utils.Question;
 
 import java.util.ArrayList;
 
 import io.github.mthli.slice.Slice;
 
 public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecyclerAdapter.QuestionViewHolder>{
-    ArrayList<Question> questions = new ArrayList<Question>();
+    //ArrayList<Question> questions = new ArrayList<Question>();
     Context ct;
     FragmentManager fm;
 
@@ -41,8 +40,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
 
     @Override
     public void onBindViewHolder(@NonNull QuestionViewHolder holder, int position) {
-        Slice slice = new Slice(holder.getLayout());
-        slice.setColor(R.color.button);
+        Slice slice = new Slice(holder.questionCard);
         slice.setRipple(1);
         slice.setRadius(8.0f);
 

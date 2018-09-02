@@ -4,7 +4,6 @@
     package="com.technocracy.nitraipur.kleos2k18">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
@@ -40,7 +39,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activities.LoginActivity"
+        <activity
+            android:name=".activities.LoginActivity"
+            android:screenOrientation="nosensor">
+
+        </activity>
+        <activity
+            android:name=".activities.OtpActivity"
+            android:screenOrientation="nosensor">
+
+        </activity>
+        <activity android:name=".activities.ProfileSetupActivity"
             android:screenOrientation="nosensor">
 
         </activity>

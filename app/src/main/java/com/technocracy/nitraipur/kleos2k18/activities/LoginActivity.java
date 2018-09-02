@@ -1,27 +1,355 @@
 package com.technocracy.nitraipur.kleos2k18.activities;
 
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+import com.github.florent37.viewtooltip.ViewTooltip;
 import com.technocracy.nitraipur.kleos2k18.R;
+import com.technocracy.nitraipur.kleos2k18.model.Message;
+import com.technocracy.nitraipur.kleos2k18.model.User.User;
+import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
+import com.technocracy.nitraipur.kleos2k18.restapi.ApiEndpoints;
+import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
+import com.wang.avi.AVLoadingIndicatorView;
 
+import am.appwise.components.ni.NoInternetDialog;
+import es.dmoral.toasty.Toasty;
 import io.github.mthli.slice.Slice;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import tyrantgit.explosionfield.ExplosionField;
 
 import static maes.tech.intentanim.CustomIntent.customType;
 
 public class LoginActivity extends AppCompatActivity {
- Button signup;
+ Button signup, signupPage, loginPage;
+ EditText phone, pass, confirmPass;
+ TextInputLayout passH,phoneH,confirmH;
+ AVLoadingIndicatorView indicatorView;
+ UserPreferences userPreferences;
+ ExplosionField mExplosionField;
+ ApiEndpoints apiBase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         customType(this, "fadein-to-fadeout");
 
+        userPreferences = new UserPreferences(this);
+
+        signupPage = (Button)findViewById(R.id.signupButton);
+        loginPage = (Button)findViewById(R.id.loginButton);
+
+        indicatorView = (AVLoadingIndicatorView)findViewById(R.id.avi);
+        indicatorView.hide();
+
+        phone = (EditText)findViewById(R.id.phoneNo);
+        pass = (EditText)findViewById(R.id.pass);
+        confirmPass = (EditText)findViewById(R.id.confirmPass);
+
+        passH = (TextInputLayout)findViewById(R.id.passHint);
+        confirmH = (TextInputLayout)findViewById(R.id.confirmHint);
+        phoneH = (TextInputLayout)findViewById(R.id.phoneHint);
+
+        signupPage.setTextColor(Color.parseColor("#FFFFFF"));
+        loginPage.setTextColor(Color.parseColor("#89FFFFFF"));
+
         signup = (Button)findViewById(R.id.signup);
+        mExplosionField = ExplosionField.attach2Window(this);
         Slice slice = new Slice(signup);
         slice.setRadius(8f);
         slice.setColor(Color.parseColor("#00BB84"));
+
+        apiBase = ApiBase.getClient().create(ApiEndpoints.class);;
+    }
+
+    public void showViewTooltip(View v, String message){
+        ViewTooltip.on(v)
+                .align(ViewTooltip.ALIGN.CENTER)
+                .position(ViewTooltip.Position.LEFT)
+                .text(message)
+                .textColor(Color.WHITE)
+                .color(Color.parseColor("#00BB84"))
+                .padding(2,2,2,2)
+                .corner(15)
+                .arrowWidth(15)
+                .arrowHeight(15)
+                .distanceWithView(0)
+                .show();
+    }
+
+    public void signupPage(View view) {
+        indicatorView.hide();
+        signupPage.setTextColor(Color.parseColor("#FFFFFF"));
+        loginPage.setTextColor(Color.parseColor("#89FFFFFF"));
+
+        try {
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+
+        }
+
+        confirmH.setVisibility(View.INVISIBLE);
+
+        YoYo.with(Techniques.FadeOut)
+                .duration(500)
+                .playOn(phoneH);
+        YoYo.with(Techniques.FadeOut)
+                .duration(500)
+                .playOn(passH);
+        YoYo.with(Techniques.FadeOut)
+                .duration(500)
+                .playOn(signup);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        phone.setText("");
+                        pass.setText("");
+                        confirmPass.setText("");
+                        confirmH.setVisibility(View.VISIBLE);
+                        signup.setText("Sign me Up");
+                    }
+                }, 600);
+
+            }
+        });
+
+
+        YoYo.with(Techniques.SlideInRight)
+                .delay(500)
+                .duration(500)
+                .playOn(phoneH);
+
+        YoYo.with(Techniques.SlideInRight)
+                .delay(500)
+                .duration(500)
+                .playOn(passH);
+
+        YoYo.with(Techniques.SlideInRight)
+                .delay(500)
+                .duration(500)
+                .playOn(confirmH);
+        YoYo.with(Techniques.FadeIn)
+                .delay(500)
+                .duration(500)
+                .playOn(signup);
+
+
+    }
+
+    public void loginPage(View view) {
+
+        indicatorView.hide();
+        loginPage.setTextColor(Color.parseColor("#FFFFFF"));
+        signupPage.setTextColor(Color.parseColor("#89FFFFFF"));
+
+        try {
+            InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        } catch (Exception e) {
+        }
+
+        YoYo.with(Techniques.FadeOut)
+                .duration(500)
+                .playOn(phoneH);
+
+        YoYo.with(Techniques.FadeOut)
+                .duration(500)
+                .playOn(passH);
+
+        YoYo.with(Techniques.FadeOut)
+                .duration(500)
+                .playOn(confirmH);
+
+        YoYo.with(Techniques.FadeOut)
+                .duration(500)
+                .playOn(signup);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        phone.setText("");
+                        pass.setText("");
+                        confirmPass.setText("");
+                        signup.setText("Log me In");
+                    }
+                }, 600);
+
+            }
+        });
+
+
+        YoYo.with(Techniques.SlideInRight)
+                .delay(500)
+                .duration(500)
+                .playOn(phoneH);
+        YoYo.with(Techniques.SlideInRight)
+                .delay(500)
+                .duration(500)
+                .playOn(passH);
+
+        YoYo.with(Techniques.FadeIn)
+                .delay(500)
+                .duration(500)
+                .playOn(signup);
+
+
+
+
+    }
+
+    public void next(View view) {
+
+        if(String.valueOf(signup.getText()).equals("Sign me Up")){
+
+            if(!String.valueOf(pass.getText()).equals("") && !String.valueOf(phone.getText()).equals("") && !String.valueOf(confirmPass.getText()).equals("")){
+                if(String.valueOf(phone.getText()).length() != 10){
+                    showViewTooltip(phone,"Enter a valid Phone Number");
+                }
+                else if(String.valueOf(pass.getText()).length() < 8 && String.valueOf(confirmPass.getText()).length() < 8){
+                    showViewTooltip(confirmPass,"Password must be of 8 character");
+                    showViewTooltip(pass,"Password must be of 8 character");
+                }
+                else if(!String.valueOf(pass.getText()).equals(String.valueOf(confirmPass.getText()))){
+                    showViewTooltip(confirmPass,"Password Didn't match");
+                    showViewTooltip(pass,"Password Didn't match");
+                    confirmPass.setText("");
+                    pass.setText("");
+                }
+                else{
+                    mExplosionField.explode(view);
+                    indicatorView.show();
+                    loginPage.setEnabled(false);
+                    signupPage.setEnabled(false);
+
+                    String phoneNo = "+91"+String.valueOf(phone.getText());
+                    String password = String.valueOf(pass.getText());
+
+//                    final User user = new User(phoneNo,password);
+//                    Call<User> call = apiBase.createUser(user);
+//                    call.enqueue(new Callback<User>() {
+//                        @Override
+//                        public void onResponse(Call<User> call, Response<User> response) {
+//                            if(response.isSuccessful()){
+//
+//                                 user.setMessage(String.valueOf(response.body()));
+//                                if(user.getMessage().equals("OTP Sent Successfully") ) {
+//                                  userPreferences.setUsername(phoneNo);
+//
+                                    Intent i = new Intent(LoginActivity.this, OtpActivity.class);
+                                    startActivity(i);
+                                    finish();
+//                                }
+//                                else {
+//                                    Toasty.error(LoginActivity.this, user.getMessage(), Toast.LENGTH_SHORT, true).show();
+//                                }
+//                            }
+//                            else{
+//                                Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<User> call, Throwable t) {
+//                            call.cancel();
+//                            NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
+//                        }
+//                    });
+
+                }
+
+            }
+            else
+                {
+                    showViewTooltip(phone,"Enter a valid Phone Number");
+                    showViewTooltip(confirmPass,"Enter a valid Password");
+                    showViewTooltip(pass, "Enter a valid Password");
+
+            }
+
+        }
+        else if(String.valueOf(signup.getText()).equals("Log me In")){
+
+            if(!String.valueOf(pass.getText()).equals("") && !String.valueOf(phone.getText()).equals("")){
+                if(String.valueOf(phone.getText()).length() != 10){
+                    showViewTooltip(phone,"Enter a valid Phone Number");
+                }
+                else if(String.valueOf(pass.getText()).length() < 8){
+                    showViewTooltip(pass,"Password must be of 8 character");
+                }
+                else{
+                    mExplosionField.explode(view);
+                    indicatorView.show();
+                    loginPage.setEnabled(false);
+                    signupPage.setEnabled(false);
+
+//                    final String phoneNo = "+91"+String.valueOf(phone.getText());
+//                    final String password = String.valueOf(pass.getText());
+
+//                    final User user = new User(phoneNo,password);
+//                    Call<User> call = apiBase.loginUser(user);
+//                    call.enqueue(new Callback<User>() {
+//                        @Override
+//                        public void onResponse(Call<User> call, Response<User> response) {
+//                            if(response.isSuccessful()){
+//                                    user.setToken(String.valueOf(response.body()));
+//                                    user.setMessage(String.valueOf(response.body()));
+//                               if(!user.getToken().equals("")){
+//                                    userPreferences.setUsername(phoneNo);
+//                                    userPreferences.setPassword(password);
+                                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                    startActivity(i);
+                                    finish();
+//                                }
+//                                else if(!user.getMessage().equals("")) {
+//                                    Toasty.error(LoginActivity.this, user.getMessage(), Toast.LENGTH_SHORT, true).show();
+//                                }
+//                                else{
+//                                   Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+//                               }
+//                            }else{
+//                                Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onFailure(Call<User> call, Throwable t) {
+//                            call.cancel();
+//                            NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
+//                        }
+//                    });
+
+                }
+
+            }
+            else
+            {   showViewTooltip(phone,"Enter a valid Phone Number");
+                showViewTooltip(pass, "Enter a valid Password");
+            }
+
+
+        }
     }
 }

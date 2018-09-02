@@ -43,7 +43,7 @@ public class SplashScreen extends AwesomeSplash  {
         configSplash.setTitleTextSize(40f);
         configSplash.setAnimTitleDuration(3000);
         configSplash.setAnimTitleTechnique(Techniques.FadeIn);
-        configSplash.setTitleFont("fonts/caviardreams_bold.ttf");
+        configSplash.setTitleFont("fonts/caviardreams.ttf");
 
 
     }
@@ -51,7 +51,7 @@ public class SplashScreen extends AwesomeSplash  {
 
     @Override
     public void animationsFinished() {
-            if(userPreferences.checkLoggedIn()){
+            if(!userPreferences.getUsername().equals("")){
                 Intent i = new Intent(this, HomeActivity.class);
                 startActivity(i);
                 finish();
