@@ -3,9 +3,11 @@ package com.technocracy.nitraipur.kleos2k18.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -41,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
  UserPreferences userPreferences;
  ExplosionField mExplosionField;
  ApiEndpoints apiBase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +75,9 @@ public class LoginActivity extends AppCompatActivity {
         slice.setRadius(8f);
         slice.setColor(Color.parseColor("#00BB84"));
 
-        apiBase = ApiBase.getClient().create(ApiEndpoints.class);;
+        apiBase = ApiBase.getClient().create(ApiEndpoints.class);
+
+
     }
 
     public void showViewTooltip(View v, String message){
@@ -240,6 +245,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else{
                     mExplosionField.explode(view);
+                    view.setVisibility(View.GONE);
                     indicatorView.show();
                     loginPage.setEnabled(false);
                     signupPage.setEnabled(false);
@@ -247,36 +253,30 @@ public class LoginActivity extends AppCompatActivity {
                     String phoneNo = "+91"+String.valueOf(phone.getText());
                     String password = String.valueOf(pass.getText());
 
-//                    final User user = new User(phoneNo,password);
-//                    Call<User> call = apiBase.createUser(user);
-//                    call.enqueue(new Callback<User>() {
-//                        @Override
-//                        public void onResponse(Call<User> call, Response<User> response) {
-//                            if(response.isSuccessful()){
-//
-//                                 user.setMessage(String.valueOf(response.body()));
-//                                if(user.getMessage().equals("OTP Sent Successfully") ) {
-//                                  userPreferences.setUsername(phoneNo);
-//
-                                    Intent i = new Intent(LoginActivity.this, OtpActivity.class);
-                                    startActivity(i);
-                                    finish();
-//                                }
-//                                else {
-//                                    Toasty.error(LoginActivity.this, user.getMessage(), Toast.LENGTH_SHORT, true).show();
-//                                }
-//                            }
-//                            else{
-//                                Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<User> call, Throwable t) {
-//                            call.cancel();
-//                            NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
-//                        }
-//                    });
+                    Call<User> call = apiBase.createUser(phoneNo,password);
+                    call.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
+
+                            Log.i("Message", String.valueOf(response.body().message));
+                            if(String.valueOf(response.body().message).equals("OTP Sent Successfully")) {
+                                userPreferences.setUsername(phoneNo);
+                                Intent i = new Intent(LoginActivity.this, OtpActivity.class);
+                                startActivity(i);
+                                finish();
+
+                            }else{
+                                Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            call.cancel();
+                            NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
+                        }
+                    });
 
                 }
 
@@ -301,45 +301,40 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else{
                     mExplosionField.explode(view);
+                    view.setVisibility(View.GONE);
                     indicatorView.show();
                     loginPage.setEnabled(false);
                     signupPage.setEnabled(false);
 
-//                    final String phoneNo = "+91"+String.valueOf(phone.getText());
-//                    final String password = String.valueOf(pass.getText());
+                    final String phoneNo = "+91"+String.valueOf(phone.getText());
+                    final String password = String.valueOf(pass.getText());
 
-//                    final User user = new User(phoneNo,password);
-//                    Call<User> call = apiBase.loginUser(user);
-//                    call.enqueue(new Callback<User>() {
-//                        @Override
-//                        public void onResponse(Call<User> call, Response<User> response) {
-//                            if(response.isSuccessful()){
-//                                    user.setToken(String.valueOf(response.body()));
-//                                    user.setMessage(String.valueOf(response.body()));
-//                               if(!user.getToken().equals("")){
-//                                    userPreferences.setUsername(phoneNo);
-//                                    userPreferences.setPassword(password);
-                                    Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                                    startActivity(i);
-                                    finish();
-//                                }
-//                                else if(!user.getMessage().equals("")) {
-//                                    Toasty.error(LoginActivity.this, user.getMessage(), Toast.LENGTH_SHORT, true).show();
-//                                }
-//                                else{
-//                                   Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
-//                               }
-//                            }else{
-//                                Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<User> call, Throwable t) {
-//                            call.cancel();
-//                            NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
-//                        }
-//                    });
+                    Call<User> call = apiBase.loginUser(phoneNo,password);
+                    call.enqueue(new Callback<User>() {
+                        @Override
+                        public void onResponse(Call<User> call, Response<User> response) {
+                            if(response.isSuccessful()) {
+                               if(!String.valueOf(response.body().key).equals("")) {
+                                   userPreferences.setUsername(phoneNo);
+                                   userPreferences.setPassword(password);
+                                   Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                   startActivity(i);
+                                   finish();
+                               }else{
+                                   Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+                               }
+                            }
+                            else{
+                                Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<User> call, Throwable t) {
+                            call.cancel();
+                            NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
+                        }
+                    });
 
                 }
 

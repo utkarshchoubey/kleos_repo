@@ -56,7 +56,8 @@ public class SplashScreen extends AwesomeSplash  {
                 startActivity(i);
                 finish();
             }else{
-                Intent i = new Intent(this, LoginActivity.class);
+                userPreferences.clearPrefs();
+                Intent i = new Intent(SplashScreen.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }

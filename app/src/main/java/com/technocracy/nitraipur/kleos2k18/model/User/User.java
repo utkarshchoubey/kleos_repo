@@ -4,52 +4,49 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.technocracy.nitraipur.kleos2k18.model.Message;
 
-public class User extends Message {
+public class User{
 
     @SerializedName("username")
     @Expose
-    private String username;
+    public String username;
 
     @SerializedName("passwod")
     @Expose
-    private String password;
+    public String password;
 
     @SerializedName("email")
     @Expose
-    private String email;
+    public String email;
     @SerializedName("first_name")
     @Expose
-    private String firstName;
+    public String firstName;
     @SerializedName("last_name")
     @Expose
-    private String lastName;
+    public String lastName;
     @SerializedName("college")
     @Expose
-    private String college;
+    public String college;
     @SerializedName("level")
     @Expose
-    private String level;
-    @SerializedName("profile")
-    @Expose
-    private String profile;
+    public String level;
 
-    @SerializedName("token")
+    @SerializedName("key")
     @Expose
-    private String token;
+    public String key;
 
     @SerializedName("otp")
     @Expose
-    private int otp;
+    public int otp;
+
+    @SerializedName("message")
+    @Expose
+    public String message;
 
 
 
     public User(String username, String password){
         this.username = username;
         this.password = password;
-    }
-    public User(String username, int otp){
-        this.username = username;
-        this.otp = otp;
     }
 
     public String getUsername() {
@@ -62,6 +59,14 @@ public class User extends Message {
 
     public String getEmail() {
         return email;
+    }
+
+
+    public String getMessage() {
+        return message;
+    }
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public void setEmail(String email) {
@@ -100,17 +105,9 @@ public class User extends Message {
         this.level = level;
     }
 
-    public String getProfile() {
-        return profile;
-    }
+    public String getKey(){ return key; }
 
-    public void setProfile(String profile) {
-        this.profile = profile;
-    }
-
-    public String getToken(){ return token; }
-
-    public void setToken(String token){ this.token = token; }
+    public void setKey(String key){ this.key = key; }
 
     public String getPassword() {
         return password;
