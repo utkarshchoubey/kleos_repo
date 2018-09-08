@@ -18,8 +18,7 @@ import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.technocracy.nitraipur.kleos2k18.R;
-import com.technocracy.nitraipur.kleos2k18.model.Message;
-import com.technocracy.nitraipur.kleos2k18.model.User.User;
+import com.technocracy.nitraipur.kleos2k18.model.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiEndpoints;
 import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
@@ -317,11 +316,32 @@ public class LoginActivity extends AppCompatActivity {
                                if(!String.valueOf(response.body().key).equals("")) {
                                    userPreferences.setUsername(phoneNo);
                                    userPreferences.setPassword(password);
-                                   Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                                   startActivity(i);
-                                   finish();
+
+                                   Call<User> userCall=apiBase.getDetails(userPreferences.getUsername());
+                                   userCall.enqueue(new Callback<User>() {
+                                       @Override
+                                       public void onResponse(Call<User> call, Response<User> response) {
+                                           if(response.isSuccessful()){
+                                               if(!String.valueOf(response.body().email).equals("")){
+                                                   userPreferences.setName(response.body().firstName.concat(" "+ response.body().lastName));
+                                                   userPreferences.setLevel(response.body().level);
+
+                                                   Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                                   startActivity(i);
+                                                   finish();
+                                               }
+                                           }
+                                       }
+
+                                       @Override
+                                       public void onFailure(Call<User> call, Throwable t) {
+                                           call.cancel();
+                                           NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
+                                       }
+                                   });
+
                                }else{
-                                   Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+                                   Toasty.info(LoginActivity.this, "User does not exist Please Signup", Toast.LENGTH_SHORT, true).show();
                                }
                             }
                             else{

@@ -1,6 +1,8 @@
 package com.technocracy.nitraipur.kleos2k18.utils;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
@@ -8,53 +10,76 @@ import android.preference.PreferenceManager;
 import com.technocracy.nitraipur.kleos2k18.R;
 
 public class UserPreferences {
-    private Activity activity;
+    private Context ct;
 
-    public UserPreferences(Activity activity){
-        this.activity = activity;
+    public UserPreferences(Context ct){
+        this.ct = ct;
     }
 
 
+
     public void setUsername(String username) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putString("username", username);
         editor.apply();
     }
     public String getUsername() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
         return preferences.getString("username", "");
+    }
+    public void setName(String name) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("name", name);
+        editor.apply();
+    }
+    public String getName() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
+        return preferences.getString("name", "");
+    }
+    public void setLevel(String level) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        editor.putString("level", level);
+        editor.apply();
+    }
+    public String getLevel() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
+        return preferences.getString("level", "");
     }
 
     public void setPassword(String password) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
         SharedPreferences.Editor editor = preferences.edit();
 
         editor.putString("password", password);
         editor.apply();
     }
     public String getPassword() {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
         return preferences.getString("password", "");
     }
 
     public void clearPrefs() {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ct);
         SharedPreferences.Editor editor = prefs.edit();
 
         editor.clear();
         editor.apply();
     }
     public void saveProfileImage(Uri uri){
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("ProfileImageUri",uri.toString());
         editor.apply();
     }
     public Uri getProfileImage(){
         Uri defaultImageUri = Uri.parse("android.resource://com.technocracy.nitraipur.kleos2k18/"+ R.drawable.profilesample);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
         return Uri.parse(preferences.getString("ProfileImageUri", defaultImageUri.toString()));
     }
 }

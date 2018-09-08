@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.technocracy.nitraipur.kleos2k18"
-    >
+    package="com.technocracy.nitraipur.kleos2k18">
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -15,9 +14,8 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="ANDROID.PERMISSION.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -30,22 +28,6 @@
         android:theme="@style/NoActionBar"
         tools:replace="android:theme">
         <activity
-            android:name=".activities.HomeActivity"
-            android:screenOrientation="nosensor">
-
-        </activity>
-        <activity
-            android:name=".activities.NavigationDrawer"
-            android:screenOrientation="nosensor">
-
-        </activity>
-        <activity
-            android:name=".activities.QuestionActivity"
-            android:parentActivityName=".activities.HomeActivity"
-            android:screenOrientation="nosensor">
-
-        </activity>
-        <activity
             android:name=".activities.SplashScreen"
             android:screenOrientation="nosensor">
             <intent-filter>
@@ -53,20 +35,34 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-
         </activity>
+        <activity
+            android:name=".activities.HomeActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".activities.NavigationDrawer"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".activities.QuestionActivity"
+            android:parentActivityName=".activities.HomeActivity"
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".activities.LoginActivity"
-            android:screenOrientation="nosensor">
-
-        </activity>
+            android:screenOrientation="nosensor" />
         <activity
             android:name=".activities.OtpActivity"
-            android:screenOrientation="nosensor">
-
-        </activity>
-        <activity android:name=".activities.ProfileSetupActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".activities.ProfileSetupActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".activities.TeamActivity"
+            android:screenOrientation="nosensor" />
+        <activity
+            android:name=".activities.SponsorsActivity"
+            android:screenOrientation="nosensor"/>
+        <activity
+            android:name=".activities.StoryLineActivity"
             android:screenOrientation="nosensor">
 
         </activity>

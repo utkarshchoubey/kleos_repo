@@ -1,12 +1,7 @@
 package com.technocracy.nitraipur.kleos2k18.restapi;
 
-import com.technocracy.nitraipur.kleos2k18.model.User.User;
-
-import java.util.concurrent.TimeUnit;
-
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

@@ -2,24 +2,21 @@ package com.technocracy.nitraipur.kleos2k18.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.technocracy.nitraipur.kleos2k18.R;
-import com.technocracy.nitraipur.kleos2k18.model.User.User;
+import com.technocracy.nitraipur.kleos2k18.model.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiEndpoints;
 import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;

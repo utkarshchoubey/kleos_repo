@@ -1,16 +1,11 @@
 package com.technocracy.nitraipur.kleos2k18.activities;
 
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,25 +15,18 @@ import com.bumptech.glide.Glide;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.myhexaville.smartimagepicker.ImagePicker;
 import com.technocracy.nitraipur.kleos2k18.R;
-import com.technocracy.nitraipur.kleos2k18.model.User.User;
+import com.technocracy.nitraipur.kleos2k18.model.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiEndpoints;
 import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 import am.appwise.components.ni.NoInternetDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
 import io.github.mthli.slice.Slice;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,7 +56,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
         lastname = (EditText) findViewById(R.id.lastName);
         college = (EditText)findViewById(R.id.college);
         email = (EditText) findViewById(R.id.email);
-        circleImageView = (CircleImageView)findViewById(R.id.profile_image);
+        circleImageView = (CircleImageView)findViewById(R.id.drawerImg);
 
         indicatorView = (AVLoadingIndicatorView)findViewById(R.id.avi);
         indicatorView.hide();
@@ -124,7 +112,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
         if(!String.valueOf(firstname.getText()).equals("") && !String.valueOf(lastname.getText()).equals("") && !String.valueOf(email.getText()).equals("") ){
             indicatorView.show();
             mExplosionField.explode(v);
-            userPreferences.saveProfileImage(Uri.fromFile(imagePicker.getImageFile()));
+
             String username = userPreferences.getUsername();
             submit.setEnabled(false);
             apiBase = ApiBase.getClient().create(ApiEndpoints.class);
@@ -138,8 +126,13 @@ public class ProfileSetupActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                     if(response.isSuccessful()){
                     if(String.valueOf(response.body().message).equals("User Created Succesfully")){
+                        userPreferences.saveProfileImage(Uri.fromFile(imagePicker.getImageFile()));
+                        userPreferences.setName(firstname.getText().toString().concat(" "+ lastname.getText().toString()));
+                        userPreferences.setLevel("1");
+
                         Intent i = new Intent(ProfileSetupActivity.this, HomeActivity.class);
                         startActivity(i);
+                        finish();
                     }}else{
                         Toasty.error(ProfileSetupActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
                     }

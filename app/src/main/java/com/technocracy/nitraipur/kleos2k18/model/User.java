@@ -1,10 +1,10 @@
-package com.technocracy.nitraipur.kleos2k18.model.User;
+package com.technocracy.nitraipur.kleos2k18.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.technocracy.nitraipur.kleos2k18.model.Message;
 
-public class User{
+public class User extends Message{
 
     @SerializedName("username")
     @Expose
@@ -38,10 +38,6 @@ public class User{
     @Expose
     public int otp;
 
-    @SerializedName("message")
-    @Expose
-    public String message;
-
 
 
     public User(String username, String password){
@@ -62,12 +58,6 @@ public class User{
     }
 
 
-    public String getMessage() {
-        return message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public void setEmail(String email) {
         this.email = email;

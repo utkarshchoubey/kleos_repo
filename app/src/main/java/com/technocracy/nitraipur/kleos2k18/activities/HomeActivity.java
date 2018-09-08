@@ -7,6 +7,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -63,6 +65,8 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+
 
         homeTextview = (AnimatedGradientTextView) findViewById(R.id.kleos_textview);
 
@@ -159,4 +163,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         }, 2000);
     }
+
+
 }
