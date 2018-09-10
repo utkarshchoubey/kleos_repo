@@ -18,6 +18,15 @@ public class SponsorsActivity extends AppCompatActivity {
 
         customType(this, "fadein-to-fadeout");
 
+
+        YoYo.with(Techniques.RubberBand)
+                .duration(900)
+                .playOn(findViewById(R.id.textview1));
+        YoYo.with(Techniques.RubberBand)
+                .duration(900)
+                .playOn(findViewById(R.id.textview2));
     }
-   
+
+
+
 }

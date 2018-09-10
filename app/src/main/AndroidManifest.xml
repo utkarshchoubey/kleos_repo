@@ -46,7 +46,9 @@
             android:screenOrientation="nosensor" />
         <activity
             android:name=".activities.LoginActivity"
-            android:screenOrientation="nosensor" />
+            android:screenOrientation="nosensor" >
+
+        </activity>
         <activity
             android:name=".activities.OtpActivity"
             android:screenOrientation="nosensor" />

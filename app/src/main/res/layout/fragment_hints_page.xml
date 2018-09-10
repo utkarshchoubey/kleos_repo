@@ -3,14 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/hintsFrameLayout"
     android:layout_width="match_parent"
+    android:background="@drawable/abc"
     android:layout_height="match_parent"
     tools:context=".fragments.HintsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorAccent"
-        android:text="Hints Page" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center_horizontal"
+        android:text="Solve By Your OWN"
+        android:textColor="#ffffff"
+        android:textSize="25dp"
+        android:textStyle="bold" />
 
 </FrameLayout>

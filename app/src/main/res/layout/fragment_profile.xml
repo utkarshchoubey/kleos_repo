@@ -5,7 +5,7 @@
     android:id="@+id/profileFrameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@drawable/prof"
     tools:context=".fragments.ProfileFragment">
 
 
@@ -49,7 +49,9 @@
             android:drawableStart="@drawable/name"
             android:paddingLeft="15dp"
             android:paddingRight="10dp"
+            android:textStyle="bold"
             android:paddingTop="5dp"
+            android:background="#000"
             android:text="Name"
             android:textColor="#ffffff"
             android:textSize="24dp" />
@@ -60,8 +62,10 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
             android:drawablePadding="5dp"
+            android:textStyle="bold"
             android:drawableStart="@drawable/phone"
             android:paddingLeft="15dp"
+            android:background="#000"
             android:paddingTop="5dp"
             android:text="Phone Number"
             android:textColor="#ffffff"
@@ -76,6 +80,8 @@
             android:drawableStart="@drawable/mail"
             android:paddingLeft="15dp"
             android:paddingTop="5dp"
+            android:background="#000"
+            android:textStyle="bold"
             android:text="utkarshchoubey629@gmail.com"
             android:textColor="#ffffff"
             android:textSize="20dp" />
@@ -83,10 +89,12 @@
         <TextView
             android:id="@+id/collegeV"
             android:layout_width="match_parent"
+            android:background="#000"
             android:layout_height="wrap_content"
             android:drawablePadding="10dp"
             android:drawableStart="@drawable/college"
             android:paddingLeft="15dp"
+            android:textStyle="bold"
             android:paddingTop="5dp"
             android:text="College"
             android:textColor="#ffffff"
@@ -102,6 +110,7 @@
         android:layout_marginTop="45dp"
         android:padding="10dp"
         android:text="Level 12"
+        android:textStyle="bold"
         android:textColor="#ffffff"
         android:textSize="22dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"

@@ -123,8 +123,8 @@ public class HomeActivity extends AppCompatActivity {
                 }
                 depth.animate()
                         .reduce(oldFragment, new ReduceConfiguration().setDuration(900))
-                        .exit(oldFragment,new ExitConfiguration().setDuration(900))
-                        .enter(newFragment, new EnterConfiguration().setDuration(900))
+                        .exit(oldFragment,new ExitConfiguration().setDuration(500))
+                        .enter(newFragment, new EnterConfiguration().setDuration(600))
                         .start();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -135,7 +135,7 @@ public class HomeActivity extends AppCompatActivity {
                             public void run() {
                                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                             }
-                        }, 2800);
+                        }, 2600);
 
                     }
                 });

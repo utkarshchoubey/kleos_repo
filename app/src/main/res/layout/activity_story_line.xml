@@ -142,7 +142,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="For any further datails contact"
+                android:text="For any further details contact"
                 android:textStyle="bold"
                 android:textColor="#ffffff"
                 android:textSize="15sp"/>
