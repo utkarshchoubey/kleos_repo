@@ -334,7 +334,6 @@ public class LoginActivity extends AppCompatActivity {
 
                                        @Override
                                        public void onFailure(Call<User> call, Throwable t) {
-                                           call.cancel();
                                            NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
                                        }
                                    });
