@@ -13,8 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.ethanhua.skeleton.Skeleton;
-import com.ethanhua.skeleton.SkeletonScreen;
+
 import com.github.florent37.depth.Depth;
 import com.github.florent37.depth.DepthProvider;
 import com.technocracy.nitraipur.kleos2k18.R;
