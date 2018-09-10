@@ -3,6 +3,8 @@ package com.technocracy.nitraipur.kleos2k18.restapi;
 import com.technocracy.nitraipur.kleos2k18.model.Question;
 import com.technocracy.nitraipur.kleos2k18.model.User;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -42,6 +44,8 @@ public interface ApiEndpoints {
     @POST("user/api/create/uploadPic")
     Call<User> uploadPic(@Part("username") RequestBody phone, @Part MultipartBody.Part image);
 
+    @GET("user/api/leaderboard")
+    Call<List<User>> getLeaderboard();
 
     @GET("questions/api/{id}")
     Call<Question> getQuestionbyId(@Path("id") String id);
