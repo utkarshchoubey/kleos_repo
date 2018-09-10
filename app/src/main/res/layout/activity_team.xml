@@ -58,6 +58,7 @@
         android:layout_alignTop="@+id/alf"
         android:layout_gravity="center"
         android:layout_marginEnd="30dp"
+        android:adjustViewBounds="false"
         android:src="@drawable/utk"
         app:civ_border_color="@color/colorPrimaryDark" />
 
