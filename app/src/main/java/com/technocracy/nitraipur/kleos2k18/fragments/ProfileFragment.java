@@ -53,6 +53,7 @@ public class ProfileFragment extends Fragment {
         TextView emailV = (TextView) view.findViewById(R.id.emailV);
         TextView phoneV = (TextView) view.findViewById(R.id.phoneV);
         TextView collegeV = (TextView) view.findViewById(R.id.collegeV);
+        TextView level = (TextView)view.findViewById(R.id.levelV);
 
         ApiEndpoints apiBase= ApiBase.getClient().create(ApiEndpoints.class);
         Call<User> userCall=apiBase.getDetails(userPreferences.getUsername());
@@ -65,6 +66,7 @@ public class ProfileFragment extends Fragment {
                         collegeV.setText(String.valueOf(response.body().college));
                         phoneV.setText(String.valueOf(response.body().username));
                         emailV.setText(String.valueOf(response.body().email));
+                        level.setText("Level ".concat(String.valueOf(response.body().level)));
                     }
                     else{
                         Toasty.error(getContext(), "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
@@ -76,7 +78,6 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-               call.cancel();
                 NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(getContext()).build();
             }
         });

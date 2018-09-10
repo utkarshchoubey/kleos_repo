@@ -68,7 +68,7 @@ public class UserPreferences {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(ct);
         SharedPreferences.Editor editor = prefs.edit();
 
-        editor.clear();
+        boolean b = editor.clear().commit();
         editor.apply();
     }
     public void saveProfileImage(Uri uri){

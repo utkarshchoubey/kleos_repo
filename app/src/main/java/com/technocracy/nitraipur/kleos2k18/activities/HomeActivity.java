@@ -19,6 +19,9 @@ import android.widget.Toast;
 
 import com.github.florent37.depth.Depth;
 import com.github.florent37.depth.DepthProvider;
+import com.github.florent37.depth.animations.EnterConfiguration;
+import com.github.florent37.depth.animations.ExitConfiguration;
+import com.github.florent37.depth.animations.ReduceConfiguration;
 import com.mursaat.extendedtextview.AnimatedGradientTextView;
 import com.technocracy.nitraipur.kleos2k18.R;
 import com.technocracy.nitraipur.kleos2k18.fragments.HintsFragment;
@@ -73,11 +76,10 @@ public class HomeActivity extends AppCompatActivity {
                     public void run() {
                         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     }
-                }, 1700);
+                }, 1200);
 
             }
         });
-
 
 
         homeTextview = (AnimatedGradientTextView) findViewById(R.id.kleos_textview);
@@ -120,9 +122,9 @@ public class HomeActivity extends AppCompatActivity {
                         break;
                 }
                 depth.animate()
-                        .reduce(oldFragment)
-                        .exit(oldFragment)
-                        .enter(newFragment)
+                        .reduce(oldFragment, new ReduceConfiguration().setDuration(900))
+                        .exit(oldFragment,new ExitConfiguration().setDuration(900))
+                        .enter(newFragment, new EnterConfiguration().setDuration(900))
                         .start();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -133,7 +135,7 @@ public class HomeActivity extends AppCompatActivity {
                             public void run() {
                                 getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                             }
-                        }, 3400);
+                        }, 2800);
 
                     }
                 });
@@ -153,7 +155,7 @@ public class HomeActivity extends AppCompatActivity {
         View v = slidingRootNav.getLayout().getChildAt(0);
         CircleImageView imageView = v.findViewById(R.id.drawerImg);
         imageView.setImageURI(preferences.getProfileImage());
-        TextView nameV =(TextView) v.findViewById(R.id.nameV);
+        TextView nameV =(TextView) v.findViewById(R.id.drawerName);
         nameV.setText(preferences.getName());
         TextView levelV = (TextView) v.findViewById(R.id.drawerLevel);
         levelV.setText("Level ".concat(preferences.getLevel()));

@@ -3,8 +3,10 @@ package com.technocracy.nitraipur.kleos2k18.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.technocracy.nitraipur.kleos2k18.R;
@@ -51,7 +53,8 @@ public class SplashScreen extends AwesomeSplash  {
 
     @Override
     public void animationsFinished() {
-            if(!userPreferences.getUsername().equals("")){
+            String a = userPreferences.getName();
+            if(!userPreferences.getName().equals("")){
                 Intent i = new Intent(this, HomeActivity.class);
                 startActivity(i);
                 finish();
@@ -68,5 +71,27 @@ public class SplashScreen extends AwesomeSplash  {
         super.onDestroy();
     }
 
+    boolean doubleBackToExitPressedOnce = false;
 
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            Intent a = new Intent(Intent.ACTION_MAIN);
+            a.addCategory(Intent.CATEGORY_HOME);
+            a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(a);
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
 }

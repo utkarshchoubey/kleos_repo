@@ -142,7 +142,6 @@ public class ProfileSetupActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                    call.cancel();
                     NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(ProfileSetupActivity.this).build();
                 }
             });

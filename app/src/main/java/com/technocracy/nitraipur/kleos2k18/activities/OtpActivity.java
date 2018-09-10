@@ -170,7 +170,6 @@ public class OtpActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<User> call, Throwable t) {
-                    call.cancel();
                     NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(OtpActivity.this).build();
                 }
             });

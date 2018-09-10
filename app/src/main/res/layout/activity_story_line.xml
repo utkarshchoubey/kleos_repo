@@ -4,6 +4,89 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".activities.StoryLineActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/answerAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintBottom_toTopOf="@+id/mainRelativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#15161d"
+            app:popupTheme="@style/Theme.AppCompat">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                app:srcCompat="@drawable/backbutton" />
+
+            <com.mursaat.extendedtextview.AnimatedGradientTextView
+                android:id="@+id/kleos_textview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/caviardreams"
+                android:lineSpacingExtra="8sp"
+                android:text="Storyline"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="36sp"
+                android:typeface="monospace"
+                app:angle="45"
+                app:colors="@array/main_gradient"
+                app:maxFPS="30"
+                app:simultaneousColors="4"
+                app:speed="1000" />
+
+
+        </android.support.v7.widget.Toolbar>
+
+
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/answerAppBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/storymain" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="5sp"
+                android:text="The life that had dwelt within him is very safe from perils of undoubtedly cruel world. It was all hassle, with pitter patter striding, and squeaky sounds of boarders at place where million words surrounds quiescence, burgeoning minds crave for co naissance and busted lamps hung fro fissured vaults, woods littered with torns and dusts and cadaver at linoleum cellar with tangling cinnamon wave falling across nape panicking hearts of fille around, and the boardings  prestige was on stake and they have no way out too."
+                android:textColor="@color/white"
+                android:textSize="30sp" />
+        </LinearLayout>
+    </ScrollView>
+
 
 </android.support.constraint.ConstraintLayout>
