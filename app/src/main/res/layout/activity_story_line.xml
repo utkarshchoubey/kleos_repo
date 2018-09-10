@@ -30,7 +30,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                app:srcCompat="@drawable/backbutton" />
+                app:srcCompat="@drawable/backbutton"
+                android:onClick="exit"/>
 
             <com.mursaat.extendedtextview.AnimatedGradientTextView
                 android:id="@+id/kleos_textview"
