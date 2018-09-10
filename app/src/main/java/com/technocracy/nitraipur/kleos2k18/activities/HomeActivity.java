@@ -9,9 +9,12 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.florent37.depth.Depth;
@@ -22,9 +25,15 @@ import com.technocracy.nitraipur.kleos2k18.fragments.HintsFragment;
 import com.technocracy.nitraipur.kleos2k18.fragments.LeaderboardFragment;
 import com.technocracy.nitraipur.kleos2k18.fragments.ProfileFragment;
 import com.technocracy.nitraipur.kleos2k18.fragments.QuestionsFragment;
+import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
+import com.yarolegovich.slidingrootnav.SlidingRootNavLayout;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 import static maes.tech.intentanim.CustomIntent.customType;
@@ -37,6 +46,7 @@ public class HomeActivity extends AppCompatActivity {
     BottomNavigation bottomNavigation;
     int prevFragmentPos = 0;
     ConstraintLayout mainLayout;
+    UserPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +54,8 @@ public class HomeActivity extends AppCompatActivity {
         customType(this, "fadein-to-fadeout");
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        preferences = new UserPreferences(this);
 
         mainLayout = (ConstraintLayout)findViewById(R.id.activity_home);
 
@@ -134,11 +146,51 @@ public class HomeActivity extends AppCompatActivity {
         slidingRootNav = new SlidingRootNavBuilder(this)
                 .withToolbarMenuToggle(toolbar)
                 .withMenuOpened(false)
-                .withContentClickableWhenMenuOpened(false)
+                .withContentClickableWhenMenuOpened(true)
                 .withSavedState(savedInstanceState)
                 .withMenuLayout(R.layout.navigation_drawer)
                 .inject();
-    }
+        View v = slidingRootNav.getLayout().getChildAt(0);
+        CircleImageView imageView = v.findViewById(R.id.drawerImg);
+        imageView.setImageURI(preferences.getProfileImage());
+        TextView nameV =(TextView) v.findViewById(R.id.nameV);
+        nameV.setText(preferences.getName());
+        TextView levelV = (TextView) v.findViewById(R.id.drawerLevel);
+        levelV.setText("Level ".concat(preferences.getLevel()));
+        Button logout =(Button) v.findViewById(R.id.logoutB);
+        Button teamB =(Button) v.findViewById(R.id.teamB);
+        Button storylineB =(Button) v.findViewById(R.id.storylineB);
+        Button sponsorsB =(Button) v.findViewById(R.id.sponsorsB);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                preferences.clearPrefs();
+                Intent i = new Intent(HomeActivity.this, SplashScreen.class);
+                startActivity(i);
+            }
+        });
+        teamB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, TeamActivity.class);
+                startActivity(i);
+            }
+        });
+        storylineB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, StoryLineActivity.class);
+                startActivity(i);
+            }
+        });
+        sponsorsB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(HomeActivity.this, SponsorsActivity.class);
+                startActivity(i);
+            }
+        });
+        }
 
     boolean doubleBackToExitPressedOnce = false;
 
