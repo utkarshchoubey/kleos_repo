@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/winner" />
 
     <TextView
-        android:id="@+id/nameTV"
+        android:id="@+id/leaderboardnameTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -30,10 +30,10 @@
         android:textSize="35dp" />
 
     <TextView
-        android:id="@+id/levelTV"
+        android:id="@+id/leaderboardlevelTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/nameTV"
+        android:layout_below="@+id/leaderboardnameTV"
         android:layout_toEndOf="@+id/imageView2"
         android:padding="2dp"
         android:text="TextView"

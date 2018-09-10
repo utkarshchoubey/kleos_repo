@@ -106,11 +106,12 @@
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/shritesh"
-        android:layout_width="150dp"
+        android:layout_width="145dp"
         android:layout_height="150dp"
         android:layout_alignStart="@+id/utk"
         android:layout_alignTop="@+id/shristi"
         android:layout_gravity="center"
+        android:layout_marginStart="5dp"
         android:src="@drawable/shritesh"
         app:civ_border_color="@color/colorPrimaryDark" />
 
