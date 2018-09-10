@@ -8,6 +8,7 @@
     tools:context=".activities.SponsorsActivity">
 
     <TextView
+        android:id="@+id/textview1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -24,6 +25,7 @@
         app:layout_constraintVertical_bias="1.0" />
 
     <TextView
+        android:id="@+id/textview2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

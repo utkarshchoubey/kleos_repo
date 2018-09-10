@@ -3,6 +3,8 @@ package com.technocracy.nitraipur.kleos2k18.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.technocracy.nitraipur.kleos2k18.R;
 
 import static maes.tech.intentanim.CustomIntent.customType;
@@ -17,4 +19,5 @@ public class SponsorsActivity extends AppCompatActivity {
         customType(this, "fadein-to-fadeout");
 
     }
+   
 }
