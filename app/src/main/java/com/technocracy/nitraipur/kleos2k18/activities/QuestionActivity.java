@@ -2,6 +2,7 @@ package com.technocracy.nitraipur.kleos2k18.activities;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,6 +26,7 @@ import io.github.mthli.slice.Slice;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import tyrantgit.explosionfield.ExplosionField;
 
 import static maes.tech.intentanim.CustomIntent.customType;
 
@@ -32,18 +34,24 @@ public class QuestionActivity extends AppCompatActivity {
     TextView tv,tv1;
     UserPreferences userPreferences;
     EditText ed;
+    TextInputLayout til;
     ApiEndpoints apiBase;
     Button button;
     Question q;
+    ExplosionField mExplosionField;
     int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
         customType(this, "fadein-to-fadeout");
+        userPreferences = new UserPreferences(this);
+
+        mExplosionField = ExplosionField.attach2Window(this);
 
         tv=(TextView)findViewById(R.id.questionText);
         tv1=(TextView)findViewById(R.id.tv1);
+        til = (TextInputLayout)findViewById(R.id.til);
         ed=(EditText)findViewById(R.id.answer);
 
         button=(Button)findViewById(R.id.submitB);
@@ -51,11 +59,22 @@ public class QuestionActivity extends AppCompatActivity {
         slice.setRadius(8f);
         slice.setColor(Color.parseColor("#00BB84"));
 
+
+
         q = getIntent().getParcelableExtra("question");
         pos = getIntent().getExtras().getInt("id");
         tv1.setText(q.title);
         tv.setText(q.question);
-        userPreferences = new UserPreferences(this);
+
+        if(pos < Integer.parseInt(userPreferences.getLevel())){
+            button.setVisibility(View.GONE);
+            ed.setVisibility(View.GONE);
+            til.setVisibility(View.GONE);
+            til.setEnabled(false);
+            button.setEnabled(false);
+            ed.setEnabled(false);
+        }
+
         apiBase = ApiBase.getClient().create(ApiEndpoints.class);
     }
 
@@ -65,6 +84,9 @@ public class QuestionActivity extends AppCompatActivity {
 
     public void submitAnswer(View view) {
         if(ed.getText().toString().length() > 0){
+            mExplosionField.explode(view);
+            view.setVisibility(View.INVISIBLE);
+            view.setEnabled(false);
             Call<User> call = apiBase.submitAnswer(userPreferences.getUsername(),String.valueOf(pos),String.valueOf(ed.getText()));
             call.enqueue(new Callback<User>() {
                 @Override
@@ -75,13 +97,17 @@ public class QuestionActivity extends AppCompatActivity {
                             Toasty.success(QuestionActivity.this, "Congratulations your answer is correct!!", Toast.LENGTH_SHORT, true).show();
                         }
                         else{
-                            Toasty.error(QuestionActivity.this, "Sorry Wrong Answer.", Toast.LENGTH_SHORT, true).show();
+                            Toasty.error(QuestionActivity.this, "Sorry Wrong Answer.Please Try Again!!", Toast.LENGTH_SHORT, true).show();
+                            view.setVisibility(View.VISIBLE);
+                            view.setEnabled(true);
                         }
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    view.setVisibility(View.VISIBLE);
+                    view.setEnabled(true);
                     NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(QuestionActivity.this).build();
                 }
             });
