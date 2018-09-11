@@ -1,5 +1,6 @@
 package com.technocracy.nitraipur.kleos2k18.restapi;
 
+import com.technocracy.nitraipur.kleos2k18.model.Message;
 import com.technocracy.nitraipur.kleos2k18.model.Question;
 import com.technocracy.nitraipur.kleos2k18.model.User;
 
@@ -17,6 +18,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ApiEndpoints {
+
     @FormUrlEncoded
     @POST("user/api/create/new")
     Call<User> createUser(@Field("username")String phone, @Field("password") String pass);
@@ -43,6 +45,10 @@ public interface ApiEndpoints {
     @Multipart
     @POST("user/api/create/uploadPic")
     Call<User> uploadPic(@Part("username") RequestBody phone, @Part MultipartBody.Part image);
+
+    @FormUrlEncoded
+    @POST("user/api/answer/")
+    Call<User> submitAnswer(@Field("username") String phone,@Field("questionID") String questionID,@Field("answer") String answer);
 
     @GET("user/api/leaderboard")
     Call<List<User>> getLeaderboard();

@@ -1,9 +1,14 @@
 package com.technocracy.nitraipur.kleos2k18.model;
 
+
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Question {
+public class Question extends Message implements Parcelable {
 
     @SerializedName("title")
     @Expose
@@ -14,6 +19,36 @@ public class Question {
     @SerializedName("image")
     @Expose
     public String image;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(question);
+        dest.writeString(image);
+    }
+
+    public Question(Parcel in) {
+        title = in.readString();
+        question = in.readString();
+        image = in.readString();
+    }
+
+    public static final Creator<Question> CREATOR = new Creator<Question>() {
+        @Override
+        public Question createFromParcel(Parcel in) {
+            return new Question(in);
+        }
+
+        @Override
+        public Question[] newArray(int size) {
+            return new Question[size];
+        }
+    };
 
     public String getTitle() {
         return title;
@@ -38,5 +73,6 @@ public class Question {
     public void setImage(String image) {
         this.image = image;
     }
+
 
 }

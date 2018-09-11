@@ -2,6 +2,7 @@ package com.technocracy.nitraipur.kleos2k18.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -66,7 +67,8 @@ public class OtpActivity extends AppCompatActivity {
 
         otpEdit = (TextInputEditText)findViewById(R.id.otpEditText);
 
-        apiBase = ApiBase.getClient().create(ApiEndpoints.class);;
+        apiBase = ApiBase.getClient().create(ApiEndpoints.class);
+
         resend.setVisibility(View.INVISIBLE);
         mCvCountdownView = (CountdownView)findViewById(R.id.countdown);
         mCvCountdownView.start(90000);
@@ -140,14 +142,14 @@ public class OtpActivity extends AppCompatActivity {
         if(String.valueOf(otpEdit.getText()).length() == 6){
         indicatorView.show();
         mExplosionField.explode(view);
+        view.setVisibility(View.GONE);
         mCvCountdownView.stop();
         String username = userPreferences.getUsername();
         String otp = otpEdit.getText().toString();
-            final User user = new User(username,otp);
             Call<User> call = apiBase.otpVerification(username, otp);
             call.enqueue(new Callback<User>() {
                 @Override
-                public void onResponse(Call<User> call, Response<User> response) {
+                public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                     if(response.isSuccessful()){
 
                         if(response.isSuccessful()) {
@@ -156,20 +158,24 @@ public class OtpActivity extends AppCompatActivity {
                                 startActivity(i);
                                 finish();
                             }else{
+                                view.setVisibility(View.VISIBLE);
                                 Toasty.error(OtpActivity.this, "OTP didn't match", Toast.LENGTH_SHORT, true).show();
                             }
                         }
                         else {
+                            view.setVisibility(View.VISIBLE);
                             Toasty.error(OtpActivity.this, String.valueOf(response.body()), Toast.LENGTH_SHORT, true).show();
                         }
                     }
                     else{
+                        view.setVisibility(View.VISIBLE);
                         Toasty.error(OtpActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<User> call, Throwable t) {
+                public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    view.setVisibility(View.VISIBLE);
                     NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(OtpActivity.this).build();
                 }
             });

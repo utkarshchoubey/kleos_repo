@@ -48,7 +48,9 @@ public class LeaderboardFragment extends Fragment {
         AVLoadingIndicatorView indicatorView =(AVLoadingIndicatorView)view.findViewById(R.id.avi);
         indicatorView.show();
         TextView def = (TextView)view.findViewById(R.id.defaultTV);
+        def.setVisibility(View.INVISIBLE);
         RecyclerView rv = (RecyclerView)view.findViewById(R.id.leaderboadRV);
+        rv.setVisibility(View.INVISIBLE);
         ApiEndpoints apiBase= ApiBase.getClient().create(ApiEndpoints.class);
         Call<List<User>> call = apiBase.getLeaderboard();
         call.enqueue(new Callback<List<User>>() {
@@ -57,18 +59,18 @@ public class LeaderboardFragment extends Fragment {
               if(response.isSuccessful()){
                   indicatorView.hide();
                  response.body();
-                  //if(users.size() > 9){
+                  if(response.body().size() > 9){
                       def.setVisibility(View.GONE);
                       rv.setVisibility(View.VISIBLE);
                       LinearLayoutManager layout = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);
                       rv.setLayoutManager(layout);
                       LeaderboardRecylerAdapter adapter = new LeaderboardRecylerAdapter(getContext(), response.body());
                       rv.setAdapter(adapter);
-                  //}
-                  //else{
-                    //  def.setVisibility(View.Visible);
-                     // rv.setVisibility(View.Gone);
-                  //}
+                  }
+                  else{
+                      def.setVisibility(View.VISIBLE);
+                      rv.setVisibility(View.GONE);
+                  }
               }
             }
 

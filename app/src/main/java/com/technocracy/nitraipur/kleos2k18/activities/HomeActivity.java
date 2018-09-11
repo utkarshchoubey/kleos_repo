@@ -7,8 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -31,10 +29,6 @@ import com.technocracy.nitraipur.kleos2k18.fragments.QuestionsFragment;
 import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
 import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
-import com.yarolegovich.slidingrootnav.SlidingRootNavLayout;
-
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
@@ -82,7 +76,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        homeTextview = (AnimatedGradientTextView) findViewById(R.id.kleos_textview);
+        homeTextview = (AnimatedGradientTextView) findViewById(R.id.tv1);
 
         bottomNavigation= (BottomNavigation)findViewById(R.id.bottomNavigation);
         bottomNavigation.setOnMenuItemClickListener(new BottomNavigation.OnMenuItemSelectionListener() {
@@ -169,6 +163,7 @@ public class HomeActivity extends AppCompatActivity {
                 preferences.clearPrefs();
                 Intent i = new Intent(HomeActivity.this, SplashScreen.class);
                 startActivity(i);
+                finish();
             }
         });
         teamB.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +171,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, TeamActivity.class);
                 startActivity(i);
+                finish();
             }
         });
         storylineB.setOnClickListener(new View.OnClickListener() {
@@ -183,6 +179,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, StoryLineActivity.class);
                 startActivity(i);
+                finish();
             }
         });
         sponsorsB.setOnClickListener(new View.OnClickListener() {
@@ -190,6 +187,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, SponsorsActivity.class);
                 startActivity(i);
+                finish();
             }
         });
         }

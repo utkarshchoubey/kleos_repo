@@ -266,12 +266,18 @@ public class LoginActivity extends AppCompatActivity {
 
                             }else{
                                 Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+                                view.setVisibility(View.VISIBLE);
+                                loginPage.setEnabled(true);
+                                signupPage.setEnabled(true);
                             }
 
                         }
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
+                            view.setVisibility(View.VISIBLE);
+                            loginPage.setEnabled(true);
+                            signupPage.setEnabled(true);
                             NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
                         }
                     });
@@ -329,11 +335,23 @@ public class LoginActivity extends AppCompatActivity {
                                                    startActivity(i);
                                                    finish();
                                                }
+                                               else {
+                                                   view.setVisibility(View.VISIBLE);
+                                                   loginPage.setEnabled(true);
+                                                   signupPage.setEnabled(true);
+                                               }
+                                           }else {
+                                               view.setVisibility(View.VISIBLE);
+                                               loginPage.setEnabled(true);
+                                               signupPage.setEnabled(true);
                                            }
                                        }
 
                                        @Override
                                        public void onFailure(Call<User> call, Throwable t) {
+                                           view.setVisibility(View.VISIBLE);
+                                           loginPage.setEnabled(true);
+                                           signupPage.setEnabled(true);
                                            NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
                                        }
                                    });

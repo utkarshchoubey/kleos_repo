@@ -9,12 +9,13 @@
     tools:context=".activities.LoginActivity">
 
     <com.mursaat.extendedtextview.AnimatedGradientTextView
-        android:id="@+id/kleos_textview"
+        android:id="@+id/tv1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:background="@color/colorPrimary"
         android:fontFamily="@font/katfyred"
+        android:paddingBottom="20dp"
         android:paddingLeft="40dp"
         android:text="Kleos"
         android:textAlignment="viewStart"
@@ -42,7 +43,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kleos_textview">
+        app:layout_constraintTop_toBottomOf="@+id/tv1">
 
         <TextView
             android:id="@+id/textView"

@@ -111,7 +111,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
         if(!String.valueOf(firstname.getText()).equals("") && !String.valueOf(lastname.getText()).equals("") && !String.valueOf(email.getText()).equals("") ){
             indicatorView.show();
             mExplosionField.explode(v);
-
+            v.setVisibility(View.GONE);
             String username = userPreferences.getUsername();
             submit.setEnabled(false);
             apiBase = ApiBase.getClient().create(ApiEndpoints.class);
@@ -130,18 +130,20 @@ public class ProfileSetupActivity extends AppCompatActivity {
                             userPreferences.saveProfileImage(Uri.fromFile(file));
                         }userPreferences.saveProfileImage(userPreferences.getProfileImage());
                         userPreferences.setName(firstname.getText().toString().concat(" "+ lastname.getText().toString()));
-                        userPreferences.setLevel("1");
+                        userPreferences.setLevel("0");
 
                         Intent i = new Intent(ProfileSetupActivity.this, HomeActivity.class);
                         startActivity(i);
                         finish();
                     }}else{
+                        v.setVisibility(View.VISIBLE);
                         Toasty.error(ProfileSetupActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    v.setVisibility(View.VISIBLE);
                     NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(ProfileSetupActivity.this).build();
                 }
             });

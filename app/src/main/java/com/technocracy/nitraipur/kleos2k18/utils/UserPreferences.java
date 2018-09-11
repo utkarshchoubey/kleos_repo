@@ -49,7 +49,7 @@ public class UserPreferences {
     }
     public String getLevel() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(ct);
-        return preferences.getString("level", "1");
+        return preferences.getString("level", "0");
     }
 
     public void setPassword(String password) {

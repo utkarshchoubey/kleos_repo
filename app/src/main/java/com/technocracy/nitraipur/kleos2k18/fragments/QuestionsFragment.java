@@ -19,6 +19,7 @@ import com.github.florent37.depth.DepthProvider;
 import com.lsjwzh.widget.recyclerviewpager.RecyclerViewPager;
 import com.technocracy.nitraipur.kleos2k18.R;
 import com.technocracy.nitraipur.kleos2k18.adapters.QuestionRecyclerAdapter;
+import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
 
 import io.github.mthli.slice.Slice;
 
@@ -36,11 +37,13 @@ public class QuestionsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        UserPreferences userPreferences = new UserPreferences(getContext());
         View view = inflater.inflate(R.layout.fragment_question_page, container, false);
         RecyclerViewPager mRecyclerView = (RecyclerViewPager) view.findViewById(R.id.list);
         LinearLayoutManager layout = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
         mRecyclerView.setLayoutManager(layout);
-        mRecyclerView.setAdapter(new QuestionRecyclerAdapter(getContext()));
+        mRecyclerView.setAdapter(new QuestionRecyclerAdapter(getContext(),userPreferences.getLevel()));
+        mRecyclerView.scrollToPosition(Integer.parseInt(userPreferences.getLevel())+1);
         this.depth = DepthProvider.getDepth(view);
         return  depth.setupFragment(10f, 10f, view);
     }

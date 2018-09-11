@@ -12,22 +12,35 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.technocracy.nitraipur.kleos2k18.R;
+import com.technocracy.nitraipur.kleos2k18.activities.OtpActivity;
 import com.technocracy.nitraipur.kleos2k18.activities.QuestionActivity;
+import com.technocracy.nitraipur.kleos2k18.model.Question;
+import com.technocracy.nitraipur.kleos2k18.model.User;
+import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
+import com.technocracy.nitraipur.kleos2k18.restapi.ApiEndpoints;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 
+import am.appwise.components.ni.NoInternetDialog;
+import es.dmoral.toasty.Toasty;
 import io.github.mthli.slice.Slice;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecyclerAdapter.QuestionViewHolder>{
     //ArrayList<Question> questions = new ArrayList<Question>();
     Context ct;
-    FragmentManager fm;
+    String level;
 
-    public QuestionRecyclerAdapter(Context ct){
+
+    public QuestionRecyclerAdapter(Context ct, String level){
         this.ct = ct;
-        this.fm = fm;
+        this.level = level;
     }
 
     @NonNull
@@ -43,38 +56,73 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
         Slice slice = new Slice(holder.questionCard);
         slice.setRipple(1);
         slice.setRadius(8.0f);
+        holder.avi.show();
+        holder.questionTextView.setVisibility(View.INVISIBLE);
+        holder.questionContent.setVisibility(View.INVISIBLE);
 
-        holder.questionTextView.setText("Some Tittle");
-       holder.questionContent.setText(R.string.loreIsum);
-       holder.questionCard.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               Intent i = new Intent(ct, QuestionActivity.class);
-               ct.startActivity(i);
-           }
-       });
+        ApiEndpoints apiBase = ApiBase.getClient().create(ApiEndpoints.class);
+        Call<Question> call = apiBase.getQuestionbyId(String.valueOf(position + 1));
+        call.enqueue(new Callback<Question>() {
+            @Override
+            public void onResponse(@NonNull Call<Question> call, @NonNull Response<Question> response) {
+                if(response.isSuccessful()){
+                    holder.avi.hide();
+                    holder.questionTextView.setVisibility(View.VISIBLE);
+                    holder.questionContent.setVisibility(View.VISIBLE);
+                    if(!response.body().question.toString().equals("")){
+                        holder.questionTextView.setText(response.body().title);
+                        holder.questionContent.setText(response.body().question);
+                        holder.questionCard.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent i = new Intent(ct, QuestionActivity.class);
+                                i.putExtra("question",response.body());
+                                i.putExtra("id",position+1);
+                                ct.startActivity(i);
+                            }
+                        });
+                    }else {
+                        Toasty.error(ct, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+                    }
+                }
+                else{
+                    Toasty.error(ct, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Question> call, Throwable t) {
+                NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(ct).build();
+
+            }
+        });
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        if(Integer.parseInt(level) == 12)
+        return 12;
+        else return Integer.parseInt(level)+1;
+
     }
 
     public class QuestionViewHolder extends RecyclerView.ViewHolder{
         TextView questionTextView, questionContent;
         ConstraintLayout questionCard;
         ImageView questionImage;
+        AVLoadingIndicatorView avi;
         public QuestionViewHolder(View itemView) {
             super(itemView);
             questionCard = (ConstraintLayout)itemView.findViewById(R.id.questionCard);
+            avi = (AVLoadingIndicatorView)itemView.findViewById(R.id.avi);
             questionTextView = (TextView)itemView.findViewById(R.id.questionTitle);
             questionContent = (TextView)itemView.findViewById(R.id.questionContent);
             questionImage = (ImageView)itemView.findViewById(R.id.questionImage);
         }
 
-        public ConstraintLayout getLayout(){
-            return questionCard;
-        }
 
 
 
