@@ -102,13 +102,14 @@
                 android:textStyle="bold"
                 android:textColor="#ffffff"
                 android:textSize="15sp"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="* Tap on the image in question to zoom it."
-                android:textStyle="bold"
+                android:text="* Hold the images with two fingers to zoom it."
                 android:textColor="#ffffff"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
