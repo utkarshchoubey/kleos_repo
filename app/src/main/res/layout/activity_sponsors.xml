@@ -4,9 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ab"
+    android:background="@color/colorPrimary"
 
     tools:context=".activities.SponsorsActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/answerAppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintBottom_toTopOf="@+id/mainRelativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#15161d"
+            app:popupTheme="@style/Theme.AppCompat">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                app:srcCompat="@drawable/backbutton"
+                android:onClick="exit"/>
+
+            <com.mursaat.extendedtextview.AnimatedGradientTextView
+                android:id="@+id/kleos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/caviardreams"
+                android:lineSpacingExtra="8sp"
+                android:text="Sponsors"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="36sp"
+                android:typeface="monospace"
+                app:angle="45"
+                app:colors="@array/main_gradient"
+                app:maxFPS="30"
+                app:simultaneousColors="4"
+                app:speed="1000" />
+
+
+        </android.support.v7.widget.Toolbar>
+
+
+    </android.support.design.widget.AppBarLayout>
+
 
     <TextView
         android:id="@+id/textview1"

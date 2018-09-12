@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.github.florent37.viewtooltip.ViewTooltip;
+import com.mursaat.extendedtextview.AnimatedGradientTextView;
 import com.technocracy.nitraipur.kleos2k18.R;
 import com.technocracy.nitraipur.kleos2k18.model.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
@@ -51,6 +52,9 @@ public class OtpActivity extends AppCompatActivity {
         mExplosionField = ExplosionField.attach2Window(this);
 
         userPreferences = new UserPreferences(this);
+
+        AnimatedGradientTextView textView = (AnimatedGradientTextView)findViewById(R.id.kleos);
+        textView.setTextSize(getResources().getDimension(R.dimen.textsize));
 
         resend = (Button)findViewById(R.id.resend);
         resend.setVisibility(View.GONE);
@@ -181,6 +185,7 @@ public class OtpActivity extends AppCompatActivity {
             });
         }
         else{
+            YoYo.with(Techniques.Shake).duration(500).playOn(view);
             showViewTooltip(otpEdit, "Invalid OTP");
         }
     }
@@ -216,7 +221,6 @@ public class OtpActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                call.cancel();
                 NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(OtpActivity.this).build();
             }
         });

@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.technocracy.nitraipur.kleos2k18.R;
-import com.technocracy.nitraipur.kleos2k18.model.Message;
 import com.technocracy.nitraipur.kleos2k18.model.Question;
 import com.technocracy.nitraipur.kleos2k18.model.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
@@ -50,7 +49,7 @@ public class QuestionActivity extends AppCompatActivity {
         mExplosionField = ExplosionField.attach2Window(this);
 
         tv=(TextView)findViewById(R.id.questionText);
-        tv1=(TextView)findViewById(R.id.tv1);
+        tv1=(TextView)findViewById(R.id.kleos);
         til = (TextInputLayout)findViewById(R.id.til);
         ed=(EditText)findViewById(R.id.answer);
 
@@ -66,7 +65,9 @@ public class QuestionActivity extends AppCompatActivity {
         tv1.setText(q.title);
         tv.setText(q.question);
 
-        if(pos < Integer.parseInt(userPreferences.getLevel())){
+        int level = Integer.parseInt(userPreferences.getLevel());
+
+        if(pos <= level){
             button.setVisibility(View.GONE);
             ed.setVisibility(View.GONE);
             til.setVisibility(View.GONE);

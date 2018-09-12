@@ -4,23 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/vbjpg"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context=".activities.TeamActivity">
 
-
-    <TextView
-        android:layout_width="wrap_content"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/answerAppBar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_gravity="center"
-        android:layout_marginStart="132dp"
-        android:layout_marginTop="13dp"
-        android:fontFamily="@font/caviardreams"
-        android:text="Team"
-        android:textColor="@color/colorAccent"
-        android:textSize="45dp" />
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintBottom_toTopOf="@+id/mainRelativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#15161d"
+            app:popupTheme="@style/Theme.AppCompat">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:onClick="exit"
+                app:srcCompat="@drawable/backbutton" />
+
+            <com.mursaat.extendedtextview.AnimatedGradientTextView
+                android:id="@+id/kleos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/caviardreams"
+                android:lineSpacingExtra="8sp"
+                android:text="Thanks to our Team"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textSize="36sp"
+                android:typeface="monospace"
+                app:angle="45"
+                app:colors="@array/main_gradient"
+                app:maxFPS="30"
+                app:simultaneousColors="4"
+                app:speed="1000" />
+
+
+        </android.support.v7.widget.Toolbar>
+
+
+    </android.support.design.widget.AppBarLayout>
+
 
     <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/alf"
@@ -111,9 +148,9 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="88dp"
-        android:textSize="20dp"
+        android:text="Regards Team Technocracy"
         android:textColor="@color/colorAccent"
-        android:text="Regards Team Technocracy" />
+        android:textSize="20dp" />
 
 
 </RelativeLayout>

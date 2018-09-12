@@ -16,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.florent37.depth.Depth;
+import com.github.florent37.depth.DepthListener;
 import com.github.florent37.depth.DepthProvider;
+import com.github.florent37.depth.animations.DepthAnimation;
 import com.github.florent37.depth.animations.EnterConfiguration;
 import com.github.florent37.depth.animations.ExitConfiguration;
 import com.github.florent37.depth.animations.ReduceConfiguration;
@@ -31,6 +33,7 @@ import com.yarolegovich.slidingrootnav.SlidingRootNav;
 import com.yarolegovich.slidingrootnav.SlidingRootNavBuilder;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import es.dmoral.toasty.Toasty;
 import it.sephiroth.android.library.bottomnavigation.BottomNavigation;
 
 import static maes.tech.intentanim.CustomIntent.customType;
@@ -42,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
     FrameLayout mainView;
     BottomNavigation bottomNavigation;
     int prevFragmentPos = 0;
+    int nextFragmentPos = 0;
     ConstraintLayout mainLayout;
     UserPreferences preferences;
     @Override
@@ -56,9 +60,11 @@ public class HomeActivity extends AppCompatActivity {
 
         mainLayout = (ConstraintLayout)findViewById(R.id.activity_home);
 
+
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
                 WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
-        Depth depth = DepthProvider.getDepth(this);
+        FrameLayout fm = (FrameLayout)findViewById(R.id.mainFrameLayout);
+        final Depth depth = DepthProvider.getDepth(fm);
         depth.setFragmentContainer(R.id.mainFrameLayout);
         depth.animate().enter(new QuestionsFragment()).start();
         runOnUiThread(new Runnable() {
@@ -76,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        homeTextview = (AnimatedGradientTextView) findViewById(R.id.tv1);
+        homeTextview = (AnimatedGradientTextView) findViewById(R.id.kleos);
 
         bottomNavigation= (BottomNavigation)findViewById(R.id.bottomNavigation);
         bottomNavigation.setOnMenuItemClickListener(new BottomNavigation.OnMenuItemSelectionListener() {
@@ -94,32 +100,39 @@ public class HomeActivity extends AppCompatActivity {
                         default: oldFragment = new QuestionsFragment();
                     }
                 }
-                Depth depth = DepthProvider.getDepth(HomeActivity.this);
-                depth.setFragmentContainer(R.id.mainFrameLayout);
-                Fragment newFragment = new QuestionsFragment();
+                Fragment newFragment;
                 switch (itemID){
                     case R.id.questionTab:
+                        nextFragmentPos =0;
                         homeTextview.setText("Questions");
                         newFragment = new QuestionsFragment();
                         break;
                     case R.id.leaderboardtab:
+                        nextFragmentPos = 1;
                         homeTextview.setText("Leaderboard");
                         newFragment = new LeaderboardFragment();
                         break;
                     case R.id.hintTab:
+                        nextFragmentPos = 2;
                         homeTextview.setText("Hints");
                         newFragment = new HintsFragment();
                         break;
                     case R.id.profileTab:
+                        nextFragmentPos = 3;
                         homeTextview.setText("Profile");
                         newFragment = new ProfileFragment();
                         break;
+                    default: nextFragmentPos = 0;
+                        homeTextview.setText("Questions");
+                        newFragment = new QuestionsFragment();
                 }
+
                 depth.animate()
                         .reduce(oldFragment, new ReduceConfiguration().setDuration(900))
-                        .exit(oldFragment,new ExitConfiguration().setDuration(500))
+                        .exit(oldFragment, new ExitConfiguration().setDuration(500))
                         .enter(newFragment, new EnterConfiguration().setDuration(600))
                         .start();
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -137,6 +150,35 @@ public class HomeActivity extends AppCompatActivity {
             }
             @Override
             public void onMenuItemReselect(int itemID, int position, boolean fromUser) {
+            }
+        });
+        depth.addListener(new DepthListener() {
+            @Override
+            public void onAnimationEnd(DepthAnimation depthAnimation, Fragment fragment) {
+              if(fragment == null){
+                  Fragment oldFragment;
+                  Fragment newFragment;
+                  switch (prevFragmentPos){
+                          case 0: oldFragment = new QuestionsFragment(); break;
+                          case 1: oldFragment = new LeaderboardFragment(); break;
+                          case 2: oldFragment = new HintsFragment(); break;
+                          case 3: oldFragment = new ProfileFragment(); break;
+                          default: oldFragment = new QuestionsFragment();
+                  }
+                  switch (nextFragmentPos){
+                      case 0: newFragment = new QuestionsFragment(); break;
+                      case 1: newFragment = new LeaderboardFragment(); break;
+                      case 2: newFragment = new HintsFragment(); break;
+                      case 3: newFragment = new ProfileFragment(); break;
+                      default: newFragment = new QuestionsFragment();
+                  }
+                  depth.animate()
+                          .reduce(oldFragment, new ReduceConfiguration().setDuration(900))
+                          .exit(oldFragment, new ExitConfiguration().setDuration(500))
+                          .enter(newFragment, new EnterConfiguration().setDuration(600))
+                          .start();
+              }
+
             }
         });
         slidingRootNav = new SlidingRootNavBuilder(this)
@@ -171,7 +213,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, TeamActivity.class);
                 startActivity(i);
-                finish();
             }
         });
         storylineB.setOnClickListener(new View.OnClickListener() {
@@ -179,7 +220,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, StoryLineActivity.class);
                 startActivity(i);
-                finish();
             }
         });
         sponsorsB.setOnClickListener(new View.OnClickListener() {
@@ -187,7 +227,6 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(HomeActivity.this, SponsorsActivity.class);
                 startActivity(i);
-                finish();
             }
         });
         }
@@ -205,7 +244,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        Toasty.info(this, "Please click BACK again to exit", Toast.LENGTH_SHORT,true).show();
 
         new Handler().postDelayed(new Runnable() {
 

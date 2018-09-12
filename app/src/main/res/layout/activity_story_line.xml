@@ -34,7 +34,7 @@
                 android:onClick="exit"/>
 
             <com.mursaat.extendedtextview.AnimatedGradientTextView
-                android:id="@+id/tv1"
+                android:id="@+id/kleos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"
@@ -73,6 +73,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/storyline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
@@ -83,7 +84,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="5sp"
-                android:text="The life that had dwelt within him is very safe from perils of undoubtedly cruel world. It was all hassle, with pitter patter striding, and squeaky sounds of boarders at place where million words surrounds quiescence, burgeoning minds crave for co naissance and busted lamps hung fro fissured vaults, woods littered with torns and dusts and cadaver at linoleum cellar with tangling cinnamon wave falling across nape panicking hearts of fille around, and the boardings  prestige was on stake and they have no way out too."
+                android:text="@string/storyline"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
             <TextView

@@ -2,6 +2,7 @@ package com.technocracy.nitraipur.kleos2k18.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -28,5 +29,7 @@ public class SponsorsActivity extends AppCompatActivity {
     }
 
 
-
+    public void exit(View view) {
+        finish();
+    }
 }

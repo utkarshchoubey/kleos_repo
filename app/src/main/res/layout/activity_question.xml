@@ -34,7 +34,7 @@
                 app:srcCompat="@drawable/backbutton" />
 
             <com.mursaat.extendedtextview.AnimatedGradientTextView
-                android:id="@+id/tv1"
+                android:id="@+id/kleos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"

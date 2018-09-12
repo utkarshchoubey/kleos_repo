@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.github.florent37.viewtooltip.ViewTooltip;
+import com.mursaat.extendedtextview.AnimatedGradientTextView;
 import com.technocracy.nitraipur.kleos2k18.R;
 import com.technocracy.nitraipur.kleos2k18.model.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
@@ -50,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
         customType(this, "fadein-to-fadeout");
 
         userPreferences = new UserPreferences(this);
+
+        AnimatedGradientTextView textView = (AnimatedGradientTextView)findViewById(R.id.kleos);
+        textView.setTextSize(getResources().getDimension(R.dimen.textsize));
 
         signupPage = (Button)findViewById(R.id.signupButton);
         loginPage = (Button)findViewById(R.id.loginButton);
@@ -230,13 +234,16 @@ public class LoginActivity extends AppCompatActivity {
 
             if(!String.valueOf(pass.getText()).equals("") && !String.valueOf(phone.getText()).equals("") && !String.valueOf(confirmPass.getText()).equals("")){
                 if(String.valueOf(phone.getText()).length() != 10){
+                    YoYo.with(Techniques.Shake).duration(500).playOn(view);
                     showViewTooltip(phone,"Enter a valid Phone Number");
                 }
                 else if(String.valueOf(pass.getText()).length() < 8 && String.valueOf(confirmPass.getText()).length() < 8){
+                    YoYo.with(Techniques.Shake).duration(500).playOn(view);
                     showViewTooltip(confirmPass,"Password must be of 8 character");
                     showViewTooltip(pass,"Password must be of 8 character");
                 }
                 else if(!String.valueOf(pass.getText()).equals(String.valueOf(confirmPass.getText()))){
+                    YoYo.with(Techniques.Shake).duration(500).playOn(view);
                     showViewTooltip(confirmPass,"Password Didn't match");
                     showViewTooltip(pass,"Password Didn't match");
                     confirmPass.setText("");
@@ -244,7 +251,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 else{
                     mExplosionField.explode(view);
-                    view.setVisibility(View.GONE);
+                    view.setVisibility(View.INVISIBLE);
                     indicatorView.show();
                     loginPage.setEnabled(false);
                     signupPage.setEnabled(false);
@@ -286,7 +293,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
             else
-                {
+                {YoYo.with(Techniques.Shake).duration(500).playOn(view);
                     showViewTooltip(phone,"Enter a valid Phone Number");
                     showViewTooltip(confirmPass,"Enter a valid Password");
                     showViewTooltip(pass, "Enter a valid Password");
@@ -298,9 +305,11 @@ public class LoginActivity extends AppCompatActivity {
 
             if(!String.valueOf(pass.getText()).equals("") && !String.valueOf(phone.getText()).equals("")){
                 if(String.valueOf(phone.getText()).length() != 10){
+                    YoYo.with(Techniques.Shake).duration(500).playOn(view);
                     showViewTooltip(phone,"Enter a valid Phone Number");
                 }
                 else if(String.valueOf(pass.getText()).length() < 8){
+                    YoYo.with(Techniques.Shake).duration(500).playOn(view);
                     showViewTooltip(pass,"Password must be of 8 character");
                 }
                 else{
@@ -375,7 +384,8 @@ public class LoginActivity extends AppCompatActivity {
 
             }
             else
-            {   showViewTooltip(phone,"Enter a valid Phone Number");
+            {   YoYo.with(Techniques.Shake).duration(500).playOn(view);
+                showViewTooltip(phone,"Enter a valid Phone Number");
                 showViewTooltip(pass, "Enter a valid Password");
             }
 
@@ -396,7 +406,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+        Toasty.info(this, "Please click BACK again to exit", Toast.LENGTH_SHORT,true).show();
 
         new Handler().postDelayed(new Runnable() {
 

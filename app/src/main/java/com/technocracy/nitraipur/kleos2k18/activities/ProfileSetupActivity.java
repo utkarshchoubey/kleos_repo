@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.myhexaville.smartimagepicker.ImagePicker;
 import com.technocracy.nitraipur.kleos2k18.R;
@@ -150,6 +152,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
 
         }
         else{
+            YoYo.with(Techniques.Shake).duration(500).playOn(v);
             showViewTooltip(firstname, "This field can't be empty");
             showViewTooltip(lastname, "This field can't be empty");
             showViewTooltip(email, "This field can't be empty");

@@ -2,6 +2,7 @@ package com.technocracy.nitraipur.kleos2k18.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.technocracy.nitraipur.kleos2k18.R;
 
@@ -14,5 +15,9 @@ public class TeamActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team);
         customType(this, "fadein-to-fadeout");
+    }
+
+    public void exit(View view) {
+        finish();
     }
 }
