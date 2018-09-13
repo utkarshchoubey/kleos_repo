@@ -59,6 +59,8 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
         holder.avi.show();
         holder.questionTextView.setVisibility(View.INVISIBLE);
         holder.questionContent.setVisibility(View.INVISIBLE);
+        holder.bookmark.setVisibility(View.INVISIBLE);
+        holder.questionImage.setVisibility(View.INVISIBLE);
 
         ApiEndpoints apiBase = ApiBase.getClient().create(ApiEndpoints.class);
         Call<Question> call = apiBase.getQuestionbyId(String.valueOf(position + 1));
@@ -69,7 +71,11 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
                     holder.avi.hide();
                     holder.questionTextView.setVisibility(View.VISIBLE);
                     holder.questionContent.setVisibility(View.VISIBLE);
+                    holder.questionImage.setVisibility(View.VISIBLE);
                     if(!response.body().question.toString().equals("")){
+                        if(Integer.parseInt(level)>position){
+                            holder.bookmark.setVisibility(View.VISIBLE);
+                        }
                         holder.questionTextView.setText(response.body().title);
                         holder.questionContent.setText(response.body().question);
                         holder.questionCard.setOnClickListener(new View.OnClickListener() {
@@ -112,7 +118,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
     public class QuestionViewHolder extends RecyclerView.ViewHolder{
         TextView questionTextView, questionContent;
         ConstraintLayout questionCard;
-        ImageView questionImage;
+        ImageView questionImage,bookmark;
         AVLoadingIndicatorView avi;
         public QuestionViewHolder(View itemView) {
             super(itemView);
@@ -121,6 +127,7 @@ public class QuestionRecyclerAdapter extends RecyclerView.Adapter<QuestionRecycl
             questionTextView = (TextView)itemView.findViewById(R.id.questionTitle);
             questionContent = (TextView)itemView.findViewById(R.id.questionContent);
             questionImage = (ImageView)itemView.findViewById(R.id.questionImage);
+            bookmark = (ImageView)itemView.findViewById(R.id.bookmark);
         }
 
 

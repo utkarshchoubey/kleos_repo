@@ -25,7 +25,7 @@ public class StoryLineActivity extends AppCompatActivity {
         imageZoomHelper = new ImageZoomHelper(this);
 
         ImageZoomHelper.setViewZoomable(findViewById(R.id.storyline));
-        
+
     }
     public void exit(View view){
         finish();

@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/storylineConstaint"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
@@ -30,8 +31,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                app:srcCompat="@drawable/backbutton"
-                android:onClick="exit"/>
+                android:onClick="exit"
+                app:srcCompat="@drawable/backbutton" />
 
             <com.mursaat.extendedtextview.AnimatedGradientTextView
                 android:id="@+id/kleos"
@@ -68,6 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/answerAppBar">
 
         <LinearLayout
+            android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -80,81 +82,97 @@
                 app:srcCompat="@drawable/storymain" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="5sp"
                 android:text="@string/storyline"
                 android:textColor="@color/white"
                 android:textSize="25sp" />
+
             <TextView
+                android:id="@+id/t1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rules and Regulation"
-                android:textSize="30dp"
-                android:textColor="@color/colorAccent"
                 android:layout_gravity="center"
-                android:fontFamily="@font/caviardreams"/>
+                android:fontFamily="@font/caviardreams"
+                android:text="Rules and Regulation"
+                android:textColor="@color/colorAccent"
+                android:textSize="30dp" />
+
             <TextView
+                android:id="@+id/t2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="* The answers are case sensitive."
-                android:textStyle="bold"
-                android:textColor="#ffffff"
-                android:textSize="15sp"/>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="* Hold the images with two fingers to zoom it."
                 android:textColor="#ffffff"
                 android:textSize="15sp"
                 android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/t3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="* Pinch in the images with two fingers to zoom it."
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/t4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="* Internet is your best friend"
-                android:textStyle="bold"
                 android:textColor="#ffffff"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/t5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="* There is no limit to number of attempts"
-                android:textStyle="bold"
                 android:textColor="#ffffff"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/t6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="* Do not share answers"
-                android:textStyle="bold"
                 android:textColor="#ffffff"
-                android:textSize="15sp"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="* If you are caught using unfair means,you will be strictly eliminated"
-                android:textStyle="bold"
-                android:maxLines="2"
-                android:lines="2"
-                android:textColor="#ffffff"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/t7"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="2"
+                android:maxLines="2"
+                android:text="* If you are caught using unfair means,you will be strictly eliminated"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/t8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="For any further details contact"
-                android:textStyle="bold"
                 android:textColor="#ffffff"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/t9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Namrata:8109308499"
-                android:textStyle="bold"
                 android:textColor="#ffffff"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </ScrollView>

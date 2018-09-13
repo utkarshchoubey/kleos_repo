@@ -41,6 +41,7 @@ public class QuestionsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_question_page, container, false);
         RecyclerViewPager mRecyclerView = (RecyclerViewPager) view.findViewById(R.id.list);
         LinearLayoutManager layout = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,false);
+        layout.setStackFromEnd(true);
         mRecyclerView.setLayoutManager(layout);
         mRecyclerView.setAdapter(new QuestionRecyclerAdapter(getContext(),userPreferences.getLevel()));
         mRecyclerView.scrollToPosition(Integer.parseInt(userPreferences.getLevel())+1);
