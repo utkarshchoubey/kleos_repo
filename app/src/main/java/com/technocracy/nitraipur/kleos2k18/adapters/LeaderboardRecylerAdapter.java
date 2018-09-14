@@ -10,7 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.technocracy.nitraipur.kleos2k18.R;
-import com.technocracy.nitraipur.kleos2k18.model.User;
+import com.technocracy.nitraipur.kleos2k18.models.User;
 
 import java.util.List;
 

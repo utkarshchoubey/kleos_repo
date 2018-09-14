@@ -166,11 +166,21 @@ public class HomeActivity extends AppCompatActivity {
                           default: oldFragment = new QuestionsFragment();
                   }
                   switch (nextFragmentPos){
-                      case 0: newFragment = new QuestionsFragment(); break;
-                      case 1: newFragment = new LeaderboardFragment(); break;
-                      case 2: newFragment = new HintsFragment(); break;
-                      case 3: newFragment = new ProfileFragment(); break;
-                      default: newFragment = new QuestionsFragment();
+                      case 0: newFragment = new QuestionsFragment();
+                          homeTextview.setText("Questions");
+                      break;
+                      case 1:
+                          homeTextview.setText("Leaderboard");
+                          newFragment = new LeaderboardFragment(); break;
+                      case 2:
+                          homeTextview.setText("Hints");
+                          newFragment = new HintsFragment(); break;
+                      case 3:
+                          homeTextview.setText("Profile");
+                          newFragment = new ProfileFragment(); break;
+                      default:
+                          homeTextview.setText("Questions");
+                          newFragment = new QuestionsFragment();
                   }
                   depth.animate()
                           .reduce(oldFragment, new ReduceConfiguration().setDuration(900))

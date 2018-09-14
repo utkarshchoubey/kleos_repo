@@ -18,7 +18,7 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.mursaat.extendedtextview.AnimatedGradientTextView;
 import com.technocracy.nitraipur.kleos2k18.R;
-import com.technocracy.nitraipur.kleos2k18.model.User;
+import com.technocracy.nitraipur.kleos2k18.models.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiEndpoints;
 import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
@@ -146,7 +146,7 @@ public class OtpActivity extends AppCompatActivity {
         if(String.valueOf(otpEdit.getText()).length() == 6){
         indicatorView.show();
         mExplosionField.explode(view);
-        view.setVisibility(View.GONE);
+        view.setVisibility(View.INVISIBLE);
         mCvCountdownView.stop();
         String username = userPreferences.getUsername();
         String otp = otpEdit.getText().toString();

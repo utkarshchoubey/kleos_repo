@@ -19,11 +19,13 @@ import com.daimajia.androidanimations.library.YoYo;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.mursaat.extendedtextview.AnimatedGradientTextView;
 import com.technocracy.nitraipur.kleos2k18.R;
-import com.technocracy.nitraipur.kleos2k18.model.User;
+import com.technocracy.nitraipur.kleos2k18.models.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiEndpoints;
 import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
 import com.wang.avi.AVLoadingIndicatorView;
+
+import java.io.IOException;
 
 import am.appwise.components.ni.NoInternetDialog;
 import es.dmoral.toasty.Toasty;
@@ -43,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
  UserPreferences userPreferences;
  ExplosionField mExplosionField;
  ApiEndpoints apiBase;
-
+    AnimatedGradientTextView textView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
 
         userPreferences = new UserPreferences(this);
 
-        AnimatedGradientTextView textView = (AnimatedGradientTextView)findViewById(R.id.kleos);
+        textView = (AnimatedGradientTextView)findViewById(R.id.kleos);
         textView.setTextSize(getResources().getDimension(R.dimen.textsize));
 
         signupPage = (Button)findViewById(R.id.signupButton);
@@ -73,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         loginPage.setTextColor(Color.parseColor("#89FFFFFF"));
 
         signup = (Button)findViewById(R.id.signup);
+
         mExplosionField = ExplosionField.attach2Window(this);
         Slice slice = new Slice(signup);
         slice.setRadius(8f);
@@ -230,28 +233,29 @@ public class LoginActivity extends AppCompatActivity {
 
     public void next(View view) {
 
-        if(String.valueOf(signup.getText()).equals("Sign me Up")){
+        if(String.valueOf(this.signup.getText()).equals("Sign me Up")){
 
             if(!String.valueOf(pass.getText()).equals("") && !String.valueOf(phone.getText()).equals("") && !String.valueOf(confirmPass.getText()).equals("")){
                 if(String.valueOf(phone.getText()).length() != 10){
-                    YoYo.with(Techniques.Shake).duration(500).playOn(view);
+                    YoYo.with(Techniques.Shake).duration(500).playOn(signup);
                     showViewTooltip(phone,"Enter a valid Phone Number");
                 }
                 else if(String.valueOf(pass.getText()).length() < 8 && String.valueOf(confirmPass.getText()).length() < 8){
-                    YoYo.with(Techniques.Shake).duration(500).playOn(view);
+                    YoYo.with(Techniques.Shake).duration(500).playOn(signup);
                     showViewTooltip(confirmPass,"Password must be of 8 character");
                     showViewTooltip(pass,"Password must be of 8 character");
                 }
                 else if(!String.valueOf(pass.getText()).equals(String.valueOf(confirmPass.getText()))){
-                    YoYo.with(Techniques.Shake).duration(500).playOn(view);
+                    YoYo.with(Techniques.Shake).duration(500).playOn(signup);
                     showViewTooltip(confirmPass,"Password Didn't match");
                     showViewTooltip(pass,"Password Didn't match");
                     confirmPass.setText("");
                     pass.setText("");
                 }
                 else{
-                    mExplosionField.explode(view);
-                    view.setVisibility(View.INVISIBLE);
+                    mExplosionField.explode(signup);
+                    signup.setEnabled(false);
+                    signup.setVisibility(View.INVISIBLE);
                     indicatorView.show();
                     loginPage.setEnabled(false);
                     signupPage.setEnabled(false);
@@ -273,7 +277,9 @@ public class LoginActivity extends AppCompatActivity {
 
                             }else{
                                 Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
-                                view.setVisibility(View.VISIBLE);
+                                indicatorView.hide();
+                                signup.setVisibility(View.VISIBLE);
+                                signup.setEnabled(true);
                                 loginPage.setEnabled(true);
                                 signupPage.setEnabled(true);
                             }
@@ -282,7 +288,9 @@ public class LoginActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
-                            view.setVisibility(View.VISIBLE);
+                            indicatorView.hide();
+                            signup.setVisibility(View.VISIBLE);
+                            signup.setEnabled(true);
                             loginPage.setEnabled(true);
                             signupPage.setEnabled(true);
                             NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
@@ -293,7 +301,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
             else
-                {YoYo.with(Techniques.Shake).duration(500).playOn(view);
+                {YoYo.with(Techniques.Shake).duration(500).playOn(signup);
                     showViewTooltip(phone,"Enter a valid Phone Number");
                     showViewTooltip(confirmPass,"Enter a valid Password");
                     showViewTooltip(pass, "Enter a valid Password");
@@ -301,20 +309,21 @@ public class LoginActivity extends AppCompatActivity {
             }
 
         }
-        else if(String.valueOf(signup.getText()).equals("Log me In")){
+        else if(String.valueOf(this.signup.getText()).equals("Log me In")){
 
             if(!String.valueOf(pass.getText()).equals("") && !String.valueOf(phone.getText()).equals("")){
                 if(String.valueOf(phone.getText()).length() != 10){
-                    YoYo.with(Techniques.Shake).duration(500).playOn(view);
+                    YoYo.with(Techniques.Shake).duration(500).playOn(signup);
                     showViewTooltip(phone,"Enter a valid Phone Number");
                 }
                 else if(String.valueOf(pass.getText()).length() < 8){
-                    YoYo.with(Techniques.Shake).duration(500).playOn(view);
+                    YoYo.with(Techniques.Shake).duration(500).playOn(signup);
                     showViewTooltip(pass,"Password must be of 8 character");
                 }
                 else{
-                    mExplosionField.explode(view);
-                    view.setVisibility(View.GONE);
+                    mExplosionField.explode(signup);
+                    signup.setVisibility(View.INVISIBLE);
+                    signup.setEnabled(false);
                     indicatorView.show();
                     loginPage.setEnabled(false);
                     signupPage.setEnabled(false);
@@ -325,7 +334,7 @@ public class LoginActivity extends AppCompatActivity {
                     Call<User> call = apiBase.loginUser(phoneNo,password);
                     call.enqueue(new Callback<User>() {
                         @Override
-                        public void onResponse(Call<User> call, Response<User> response) {
+                        public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                             if(response.isSuccessful()) {
                                if(!String.valueOf(response.body().key).equals("")) {
                                    userPreferences.setUsername(phoneNo);
@@ -344,13 +353,10 @@ public class LoginActivity extends AppCompatActivity {
                                                    startActivity(i);
                                                    finish();
                                                }
-                                               else {
-                                                   view.setVisibility(View.VISIBLE);
-                                                   loginPage.setEnabled(true);
-                                                   signupPage.setEnabled(true);
-                                               }
                                            }else {
-                                               view.setVisibility(View.VISIBLE);
+                                               indicatorView.hide();
+                                               signup.setVisibility(View.VISIBLE);
+                                               signup.setEnabled(true);
                                                loginPage.setEnabled(true);
                                                signupPage.setEnabled(true);
                                            }
@@ -358,7 +364,9 @@ public class LoginActivity extends AppCompatActivity {
 
                                        @Override
                                        public void onFailure(Call<User> call, Throwable t) {
-                                           view.setVisibility(View.VISIBLE);
+                                           indicatorView.hide();
+                                           signup.setVisibility(View.VISIBLE);
+                                           signup.setEnabled(true);
                                            loginPage.setEnabled(true);
                                            signupPage.setEnabled(true);
                                            NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
@@ -366,16 +374,35 @@ public class LoginActivity extends AppCompatActivity {
                                    });
 
                                }else{
-                                   Toasty.info(LoginActivity.this, "User does not exist Please Signup", Toast.LENGTH_SHORT, true).show();
+                                   indicatorView.hide();
+                                   Toasty.info(LoginActivity.this, response.body().message, Toast.LENGTH_SHORT, true).show();
+                                   signup.setEnabled(true);
+                                   signup.setVisibility(View.VISIBLE);
+                                   loginPage.setEnabled(true);
+                                   signupPage.setEnabled(true);
                                }
                             }
                             else{
-                                Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
+                                indicatorView.hide();
+                                signup.setEnabled(true);
+                                signup.setVisibility(View.VISIBLE);
+                                loginPage.setEnabled(true);
+                                signupPage.setEnabled(true);
+                                try {
+                                    Toasty.error(LoginActivity.this, response.errorBody().string(), Toast.LENGTH_SHORT, true).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
 
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
+                            indicatorView.hide();
+                            signup.setEnabled(true);
+                            signup.setVisibility(View.VISIBLE);
+                            loginPage.setEnabled(true);
+                            signupPage.setEnabled(true);
                             NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
                         }
                     });
@@ -384,7 +411,7 @@ public class LoginActivity extends AppCompatActivity {
 
             }
             else
-            {   YoYo.with(Techniques.Shake).duration(500).playOn(view);
+            {   YoYo.with(Techniques.Shake).duration(500).playOn(signup);
                 showViewTooltip(phone,"Enter a valid Phone Number");
                 showViewTooltip(pass, "Enter a valid Password");
             }

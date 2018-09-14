@@ -1,8 +1,7 @@
 package com.technocracy.nitraipur.kleos2k18.restapi;
 
-import com.technocracy.nitraipur.kleos2k18.model.Message;
-import com.technocracy.nitraipur.kleos2k18.model.Question;
-import com.technocracy.nitraipur.kleos2k18.model.User;
+import com.technocracy.nitraipur.kleos2k18.models.Question;
+import com.technocracy.nitraipur.kleos2k18.models.User;
 
 import java.util.List;
 

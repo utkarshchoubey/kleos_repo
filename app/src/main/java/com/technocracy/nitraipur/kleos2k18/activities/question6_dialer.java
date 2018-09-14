@@ -82,7 +82,9 @@ public class question6_dialer extends Activity  implements View.OnClickListener{
         }
 
 
-
+    public void exit(View view) {
+        finish();
     }
+}
 
 

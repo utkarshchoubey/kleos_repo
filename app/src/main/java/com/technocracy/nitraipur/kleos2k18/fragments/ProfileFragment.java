@@ -1,7 +1,6 @@
 package com.technocracy.nitraipur.kleos2k18.fragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,8 +14,7 @@ import android.widget.Toast;
 import com.github.florent37.depth.Depth;
 import com.github.florent37.depth.DepthProvider;
 import com.technocracy.nitraipur.kleos2k18.R;
-import com.technocracy.nitraipur.kleos2k18.activities.LoginActivity;
-import com.technocracy.nitraipur.kleos2k18.model.User;
+import com.technocracy.nitraipur.kleos2k18.models.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiEndpoints;
 import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
@@ -25,7 +23,6 @@ import com.wang.avi.AVLoadingIndicatorView;
 import am.appwise.components.ni.NoInternetDialog;
 import de.hdodenhof.circleimageview.CircleImageView;
 import es.dmoral.toasty.Toasty;
-import io.github.mthli.slice.Slice;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

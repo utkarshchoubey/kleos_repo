@@ -11,13 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.github.florent37.viewtooltip.ViewTooltip;
 import com.myhexaville.smartimagepicker.ImagePicker;
 import com.technocracy.nitraipur.kleos2k18.R;
-import com.technocracy.nitraipur.kleos2k18.model.User;
+import com.technocracy.nitraipur.kleos2k18.models.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiEndpoints;
 import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
@@ -69,11 +69,6 @@ public class ProfileSetupActivity extends AppCompatActivity {
         slice.setRadius(8f);
         slice.setColor(Color.parseColor("#00BB84"));
 
-        imagePicker = new ImagePicker(this ,
-                null,
-                imageUri -> {
-                    Glide.with(this).load(imageUri).into(circleImageView);
-                });
 
     }
 
@@ -89,7 +84,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
         imagePicker.handlePermission(requestCode, grantResults);
     }
     public void pickImage(View view) {
-        imagePicker.choosePicture(true);
+        //imagePicker.choosePicture(true);
     }
 
 
@@ -113,7 +108,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
         if(!String.valueOf(firstname.getText()).equals("") && !String.valueOf(lastname.getText()).equals("") && !String.valueOf(email.getText()).equals("") ){
             indicatorView.show();
             mExplosionField.explode(v);
-            v.setVisibility(View.GONE);
+            v.setVisibility(View.INVISIBLE);
             String username = userPreferences.getUsername();
             submit.setEnabled(false);
             apiBase = ApiBase.getClient().create(ApiEndpoints.class);

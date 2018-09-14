@@ -41,7 +41,7 @@
                 android:background="@color/colorPrimary"
                 android:fontFamily="@font/caviardreams"
                 android:lineSpacingExtra="8sp"
-                android:text="Thanks to our Team"
+                android:text="Development Team"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textSize="36sp"
