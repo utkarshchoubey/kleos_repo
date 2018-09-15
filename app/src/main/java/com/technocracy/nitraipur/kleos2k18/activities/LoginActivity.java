@@ -33,7 +33,6 @@ import io.github.mthli.slice.Slice;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import tyrantgit.explosionfield.ExplosionField;
 
 import static maes.tech.intentanim.CustomIntent.customType;
 
@@ -43,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
  TextInputLayout passH,phoneH,confirmH;
  AVLoadingIndicatorView indicatorView;
  UserPreferences userPreferences;
- ExplosionField mExplosionField;
  ApiEndpoints apiBase;
     AnimatedGradientTextView textView;
     @Override
@@ -76,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
 
         signup = (Button)findViewById(R.id.signup);
 
-        mExplosionField = ExplosionField.attach2Window(this);
         Slice slice = new Slice(signup);
         slice.setRadius(8f);
         slice.setColor(Color.parseColor("#00BB84"));
@@ -253,10 +250,22 @@ public class LoginActivity extends AppCompatActivity {
                     pass.setText("");
                 }
                 else{
-                    mExplosionField.explode(signup);
-                    signup.setEnabled(false);
-                    signup.setVisibility(View.INVISIBLE);
-                    indicatorView.show();
+                    YoYo.with(Techniques.FadeOut).duration(500).playOn(view);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    signup.setVisibility(View.INVISIBLE);
+                                    indicatorView.show();
+                                }
+                            }, 600);
+
+                        }
+                    });
+
                     loginPage.setEnabled(false);
                     signupPage.setEnabled(false);
 
@@ -278,8 +287,8 @@ public class LoginActivity extends AppCompatActivity {
                             }else{
                                 Toasty.error(LoginActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
                                 indicatorView.hide();
+                                YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
                                 signup.setVisibility(View.VISIBLE);
-                                signup.setEnabled(true);
                                 loginPage.setEnabled(true);
                                 signupPage.setEnabled(true);
                             }
@@ -289,8 +298,8 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
                             indicatorView.hide();
+                            YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
                             signup.setVisibility(View.VISIBLE);
-                            signup.setEnabled(true);
                             loginPage.setEnabled(true);
                             signupPage.setEnabled(true);
                             NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
@@ -301,7 +310,8 @@ public class LoginActivity extends AppCompatActivity {
 
             }
             else
-                {YoYo.with(Techniques.Shake).duration(500).playOn(signup);
+                {
+                    YoYo.with(Techniques.Shake).duration(500).playOn(signup);
                     showViewTooltip(phone,"Enter a valid Phone Number");
                     showViewTooltip(confirmPass,"Enter a valid Password");
                     showViewTooltip(pass, "Enter a valid Password");
@@ -321,10 +331,21 @@ public class LoginActivity extends AppCompatActivity {
                     showViewTooltip(pass,"Password must be of 8 character");
                 }
                 else{
-                    mExplosionField.explode(signup);
-                    signup.setVisibility(View.INVISIBLE);
-                    signup.setEnabled(false);
-                    indicatorView.show();
+                    YoYo.with(Techniques.FadeOut).duration(500).playOn(view);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Handler handler = new Handler();
+                            handler.postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    signup.setVisibility(View.INVISIBLE);
+                                    indicatorView.show();
+                                }
+                            }, 600);
+
+                        }
+                    });
                     loginPage.setEnabled(false);
                     signupPage.setEnabled(false);
 
@@ -355,8 +376,8 @@ public class LoginActivity extends AppCompatActivity {
                                                }
                                            }else {
                                                indicatorView.hide();
+                                               YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
                                                signup.setVisibility(View.VISIBLE);
-                                               signup.setEnabled(true);
                                                loginPage.setEnabled(true);
                                                signupPage.setEnabled(true);
                                            }
@@ -365,8 +386,8 @@ public class LoginActivity extends AppCompatActivity {
                                        @Override
                                        public void onFailure(Call<User> call, Throwable t) {
                                            indicatorView.hide();
+                                           YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
                                            signup.setVisibility(View.VISIBLE);
-                                           signup.setEnabled(true);
                                            loginPage.setEnabled(true);
                                            signupPage.setEnabled(true);
                                            NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(LoginActivity.this).build();
@@ -376,7 +397,7 @@ public class LoginActivity extends AppCompatActivity {
                                }else{
                                    indicatorView.hide();
                                    Toasty.info(LoginActivity.this, response.body().message, Toast.LENGTH_SHORT, true).show();
-                                   signup.setEnabled(true);
+                                   YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
                                    signup.setVisibility(View.VISIBLE);
                                    loginPage.setEnabled(true);
                                    signupPage.setEnabled(true);
@@ -384,7 +405,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                             else{
                                 indicatorView.hide();
-                                signup.setEnabled(true);
+                                YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
                                 signup.setVisibility(View.VISIBLE);
                                 loginPage.setEnabled(true);
                                 signupPage.setEnabled(true);
@@ -399,7 +420,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call<User> call, Throwable t) {
                             indicatorView.hide();
-                            signup.setEnabled(true);
+                            YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
                             signup.setVisibility(View.VISIBLE);
                             loginPage.setEnabled(true);
                             signupPage.setEnabled(true);

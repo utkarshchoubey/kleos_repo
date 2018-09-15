@@ -2,6 +2,7 @@ package com.technocracy.nitraipur.kleos2k18.activities;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +25,8 @@ import com.technocracy.nitraipur.kleos2k18.restapi.ApiEndpoints;
 import com.technocracy.nitraipur.kleos2k18.utils.UserPreferences;
 import com.wang.avi.AVLoadingIndicatorView;
 
+import java.io.IOException;
+
 import am.appwise.components.ni.NoInternetDialog;
 import cn.iwgang.countdownview.CountdownView;
 import es.dmoral.toasty.Toasty;
@@ -31,7 +34,7 @@ import io.github.mthli.slice.Slice;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import tyrantgit.explosionfield.ExplosionField;
+
 
 import static maes.tech.intentanim.CustomIntent.customType;
 
@@ -41,7 +44,6 @@ public class OtpActivity extends AppCompatActivity {
     TextInputEditText otpEdit;
     UserPreferences userPreferences;
     AVLoadingIndicatorView indicatorView;
-    ExplosionField mExplosionField;
     ApiEndpoints apiBase;
     CountdownView mCvCountdownView;
     @Override
@@ -49,7 +51,6 @@ public class OtpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
         customType(this, "fadein-to-fadeout");
-        mExplosionField = ExplosionField.attach2Window(this);
 
         userPreferences = new UserPreferences(this);
 
@@ -57,7 +58,7 @@ public class OtpActivity extends AppCompatActivity {
         textView.setTextSize(getResources().getDimension(R.dimen.textsize));
 
         resend = (Button)findViewById(R.id.resend);
-        resend.setVisibility(View.GONE);
+        resend.setVisibility(View.INVISIBLE);
         otpButton = (Button)findViewById(R.id.otpButton);
         Slice slice = new Slice(resend);
         slice.setRadius(8f);
@@ -144,42 +145,60 @@ public class OtpActivity extends AppCompatActivity {
     public void otp(View view) {
 
         if(String.valueOf(otpEdit.getText()).length() == 6){
-        indicatorView.show();
-        mExplosionField.explode(view);
-        view.setVisibility(View.INVISIBLE);
-        mCvCountdownView.stop();
+            YoYo.with(Techniques.FadeOut).duration(500).playOn(view);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            indicatorView.show();
+                            view.setVisibility(View.INVISIBLE);
+                        }
+                    }, 500);
+
+                }
+            });
+            mCvCountdownView.pause();
         String username = userPreferences.getUsername();
         String otp = otpEdit.getText().toString();
             Call<User> call = apiBase.otpVerification(username, otp);
             call.enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
-                    if(response.isSuccessful()){
-
-                        if(response.isSuccessful()) {
-                            if(String.valueOf(response.body().message).equals("Otp Verified")) {
-                                Intent i = new Intent(OtpActivity.this, ProfileSetupActivity.class);
-                                startActivity(i);
-                                finish();
-                            }else{
-                                view.setVisibility(View.VISIBLE);
-                                Toasty.error(OtpActivity.this, "OTP didn't match", Toast.LENGTH_SHORT, true).show();
-                            }
-                        }
-                        else {
+                    if(response.isSuccessful()) {
+                        if (String.valueOf(response.body().message).equals("Otp Verified")) {
+                            mCvCountdownView.stop();
+                            Intent i = new Intent(OtpActivity.this, ProfileSetupActivity.class);
+                            startActivity(i);
+                            finish();
+                        } else {
+                            indicatorView.hide();
+                            YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
                             view.setVisibility(View.VISIBLE);
-                            Toasty.error(OtpActivity.this, String.valueOf(response.body()), Toast.LENGTH_SHORT, true).show();
+                            Toasty.error(OtpActivity.this, "OTP didn't match", Toast.LENGTH_SHORT, true).show();
+                            mCvCountdownView.restart();
+                        }
+
+                    }else {
+                            indicatorView.hide();
+                            YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
+                            view.setVisibility(View.VISIBLE);
+                        try {
+                            Toasty.error(OtpActivity.this, String.valueOf(response.errorBody().string()), Toast.LENGTH_SHORT, true).show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
-                    else{
-                        view.setVisibility(View.VISIBLE);
-                        Toasty.error(OtpActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
-                    }
+
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
+                    YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
                     view.setVisibility(View.VISIBLE);
+                    indicatorView.hide();
                     NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(OtpActivity.this).build();
                 }
             });
@@ -194,11 +213,23 @@ public class OtpActivity extends AppCompatActivity {
 
         String username = userPreferences.getUsername();
         String password = userPreferences.getPassword();
-        indicatorView.show();
-        mExplosionField.explode(view);
-        mExplosionField.explode(otpButton);
+        YoYo.with(Techniques.FadeOut).duration(500).playOn(view);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        indicatorView.show();
+                        view.setVisibility(View.INVISIBLE);
+                    }
+                }, 500);
+
+            }
+        });
         final User user = new User(username,password);
-        Call<User> call = apiBase.otpVerification(username, password);
+        Call<User> call = apiBase.createUser(username, password);
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {

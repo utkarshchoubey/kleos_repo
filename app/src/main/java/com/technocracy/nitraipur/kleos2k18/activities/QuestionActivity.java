@@ -6,7 +6,6 @@ import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -35,7 +34,6 @@ import io.github.mthli.slice.Slice;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import tyrantgit.explosionfield.ExplosionField;
 
 import static maes.tech.intentanim.CustomIntent.customType;
 
@@ -50,7 +48,6 @@ public class QuestionActivity extends AppCompatActivity {
     Question q;
     VideoView videoView;
     ImageView img,img2;
-    ExplosionField mExplosionField;
     int pos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +58,6 @@ public class QuestionActivity extends AppCompatActivity {
 
         img = (ImageView)findViewById(R.id.img);
         img2 = (ImageView)findViewById(R.id.img2);
-        mExplosionField = ExplosionField.attach2Window(this);
         imageZoomHelper = new ImageZoomHelper(this);
         ImageZoomHelper.setViewZoomable(findViewById(R.id.img));
         ImageZoomHelper.setViewZoomable(findViewById(R.id.img2));
@@ -223,6 +219,8 @@ public class QuestionActivity extends AppCompatActivity {
                 dialer.setEnabled(false);
                 break;
             case 12:
+                img.setVisibility(View.GONE);
+                img.setEnabled(false);
                 videoView.setVisibility(View.GONE);
                 videoView.setEnabled(false);
                 linearLayout.setVisibility(View.GONE);
@@ -306,10 +304,20 @@ public class QuestionActivity extends AppCompatActivity {
 
     public void submitAnswer(View view) {
         if(ed.getText().toString().length() > 0){
-            mExplosionField.clear();
-            mExplosionField.explode(button);
-            button.setVisibility(View.INVISIBLE);
-            button.setEnabled(false);
+            YoYo.with(Techniques.FadeOut).duration(500).playOn(view);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            button.setVisibility(View.INVISIBLE);
+                        }
+                    }, 500);
+
+                }
+            });
             Call<User> call = apiBase.submitAnswer(userPreferences.getUsername(),String.valueOf(pos),String.valueOf(ed.getText()));
             call.enqueue(new Callback<User>() {
                 @Override
@@ -334,16 +342,16 @@ public class QuestionActivity extends AppCompatActivity {
                         }
                         else{
                             Toasty.error(QuestionActivity.this, "Sorry Wrong Answer.Please Try Again!!", Toast.LENGTH_SHORT, true).show();
+                            YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
                             button.setVisibility(View.VISIBLE);
-                            button.setEnabled(true);
                         }
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
-                    //button.setVisibility(View.VISIBLE);
-                    //button.setEnabled(true);
+                    YoYo.with(Techniques.FadeIn).duration(500).playOn(view);
+                    button.setVisibility(View.VISIBLE);
                     NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(QuestionActivity.this).build();
                 }
             });

@@ -3,6 +3,7 @@ package com.technocracy.nitraipur.kleos2k18.activities;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,7 +16,6 @@ import android.widget.Toast;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.github.florent37.viewtooltip.ViewTooltip;
-import com.myhexaville.smartimagepicker.ImagePicker;
 import com.technocracy.nitraipur.kleos2k18.R;
 import com.technocracy.nitraipur.kleos2k18.models.User;
 import com.technocracy.nitraipur.kleos2k18.restapi.ApiBase;
@@ -32,18 +32,15 @@ import io.github.mthli.slice.Slice;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import tyrantgit.explosionfield.ExplosionField;
 
 import static maes.tech.intentanim.CustomIntent.customType;
 
 public class ProfileSetupActivity extends AppCompatActivity {
     Button submit;
-    ExplosionField mExplosionField;
     EditText firstname, lastname, college, email;
     UserPreferences userPreferences;
     AVLoadingIndicatorView indicatorView;
     CircleImageView circleImageView;
-    ImagePicker imagePicker;
     File file;
     ApiEndpoints apiBase;
     @Override
@@ -64,24 +61,11 @@ public class ProfileSetupActivity extends AppCompatActivity {
         indicatorView.hide();
 
         submit = (Button)findViewById(R.id.submit);
-        mExplosionField = ExplosionField.attach2Window(this);
         Slice slice = new Slice(submit);
         slice.setRadius(8f);
         slice.setColor(Color.parseColor("#00BB84"));
 
 
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        imagePicker.handleActivityResult(resultCode,requestCode, data);
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        imagePicker.handlePermission(requestCode, grantResults);
     }
 
 
@@ -103,11 +87,22 @@ public class ProfileSetupActivity extends AppCompatActivity {
     public void submit(View v){
 
         if(!String.valueOf(firstname.getText()).equals("") && !String.valueOf(lastname.getText()).equals("") && !String.valueOf(email.getText()).equals("") ){
-            indicatorView.show();
-            mExplosionField.explode(v);
-            v.setVisibility(View.INVISIBLE);
+            YoYo.with(Techniques.FadeOut).duration(500).playOn(v);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            indicatorView.show();
+                            v.setVisibility(View.INVISIBLE);
+                        }
+                    }, 500);
+
+                }
+            });
             String username = userPreferences.getUsername();
-            submit.setEnabled(false);
             apiBase = ApiBase.getClient().create(ApiEndpoints.class);
             Call<User> call = apiBase.fillDetails(username,
                     firstname.getText().toString(),
@@ -126,6 +121,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
                         finish();
                     }}else{
                         v.setVisibility(View.VISIBLE);
+                        YoYo.with(Techniques.FadeIn).duration(500).playOn(v);
                         Toasty.error(ProfileSetupActivity.this, "Some Thing Went Wrong", Toast.LENGTH_SHORT, true).show();
                     }
                 }
@@ -133,6 +129,7 @@ public class ProfileSetupActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(@NonNull Call<User> call, @NonNull Throwable t) {
                     v.setVisibility(View.VISIBLE);
+                    YoYo.with(Techniques.FadeIn).duration(500).playOn(v);
                     NoInternetDialog noInternetDialog = new NoInternetDialog.Builder(ProfileSetupActivity.this).build();
                 }
             });
