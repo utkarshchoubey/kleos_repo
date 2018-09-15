@@ -83,9 +83,6 @@ public class ProfileSetupActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         imagePicker.handlePermission(requestCode, grantResults);
     }
-    public void pickImage(View view) {
-        //imagePicker.choosePicture(true);
-    }
 
 
 
@@ -122,13 +119,8 @@ public class ProfileSetupActivity extends AppCompatActivity {
                 public void onResponse(@NonNull Call<User> call, @NonNull Response<User> response) {
                     if(response.isSuccessful()){
                     if(String.valueOf(response.body().message).equals("User Created Succesfully")){
-                        File file = imagePicker.getImageFile();
-                        if(file != null) {
-                            userPreferences.saveProfileImage(Uri.fromFile(file));
-                        }userPreferences.saveProfileImage(userPreferences.getProfileImage());
                         userPreferences.setName(firstname.getText().toString().concat(" "+ lastname.getText().toString()));
                         userPreferences.setLevel("0");
-
                         Intent i = new Intent(ProfileSetupActivity.this, HomeActivity.class);
                         startActivity(i);
                         finish();

@@ -53,7 +53,6 @@
         android:layout_height="235dp"
         android:layout_marginEnd="128dp"
         android:layout_marginStart="128dp"
-        android:onClick="pickImage"
         android:src="@drawable/profilesample"
         app:civ_border_color="@color/colorPrimaryDark"
         app:civ_border_width="2dp"
