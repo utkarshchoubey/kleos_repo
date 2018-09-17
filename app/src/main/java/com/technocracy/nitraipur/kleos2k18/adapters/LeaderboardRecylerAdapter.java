@@ -49,7 +49,7 @@ public class LeaderboardRecylerAdapter extends RecyclerView.Adapter<LeaderboardR
 
     @Override
     public int getItemCount() {
-        return users.size()-1;
+        return users.size();
     }
 
     public class LeaderBoardViewHolder extends RecyclerView.ViewHolder {

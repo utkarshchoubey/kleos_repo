@@ -55,7 +55,7 @@ public class LeaderboardFragment extends Fragment {
               if(response.isSuccessful()){
                   indicatorView.hide();
                  response.body();
-                  if(response.body().size() > 9){
+                  if(response.body().size() >= 10){
                       def.setVisibility(View.GONE);
                       rv.setVisibility(View.VISIBLE);
                       LinearLayoutManager layout = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false);

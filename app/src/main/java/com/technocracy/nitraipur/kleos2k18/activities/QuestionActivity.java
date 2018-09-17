@@ -209,8 +209,7 @@ public class QuestionActivity extends AppCompatActivity {
             case 11:
                 videoView.setVisibility(View.GONE);
                 videoView.setEnabled(false);
-                img.setVisibility(View.GONE);
-                img.setEnabled(false);
+                img.setImageResource(R.drawable.box);
                 linearLayout.setVisibility(View.GONE);
                 linearLayout.setEnabled(false);
                 img2.setVisibility(View.GONE);
